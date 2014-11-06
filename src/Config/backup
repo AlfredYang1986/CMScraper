@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scraper>
-	<website name="ChemistWarehouse" url="http://www.chemistwarehouse.com.au/categories.asp" handler="ChemistWarehouseHandler" crawl="ChemistWarehouseScraper">
+	<website name="ChemistWarehouse" host="http://www.chemistwarehouse.com.au/" url="http://www.chemistwarehouse.com.au/categories.asp" handler="ChemistWarehouseHandler" crawl="ChemistWarehouseScraper">
+	</website>
+	
+	<website name="MyChemist" host="http://www.mychemist.com.au/" url="http://www.mychemist.com.au/categories.asp" handler="MyChemistHandler" crawl="MyChemistScraper">
 	</website>
 </Scraper>

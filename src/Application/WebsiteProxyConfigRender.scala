@@ -10,6 +10,7 @@ object WebsiteProxyConfigRender {
 		def name2Crawl(str : String, url : String, host : String) : Crawl_2 = { 
 			str match {
 			  case "ChemistWarehouseScraper" => new ChemistWarehouseScraper(url, host)
+			  case "MyChemistScraper" => new MyChemistScraper(url, host)
 			  case _ => null
 			}
 		}
@@ -17,6 +18,7 @@ object WebsiteProxyConfigRender {
 		def name2Handler(str : String) : PageHandler_2 = { 
 			str match {
 			  case "ChemistWarehouseHandler" => new ChemistWarehouseHandler
+			  case "MyChemistHandler" => new MyChemistHandler 
 			  case _ => null
 			}
 		}
