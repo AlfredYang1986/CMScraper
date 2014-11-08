@@ -4,11 +4,13 @@ import Handler.PageHandler_2
 import Application.ScraperApp
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import DAO.ScraperCache
 
 class ChemistWarehouseScraper(p : String, h : String) extends CategoryCrawl {
 	def apply(handler :PageHandler_2) = {
 		ScraperApp.printer.writeLine("Chemist Warehouse Scraper Prase Start ...")
 		enumItems(enumPagesInCategory(getCategoryFromNav), handler)
+//    ScraperCache.refresh()
 		ScraperApp.printer.writeLine("Chemist Warehouse Scraper Prase End...")
 	}
 

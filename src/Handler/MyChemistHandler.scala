@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.Node
 import org.jsoup.select.Elements
+import DAO.ScraperCache
 
 import com.mongodb.casbah.Imports._
 
@@ -46,29 +47,32 @@ class MyChemistHandler extends PageHandler_2 {
     /**
      * 4. get price
      */
+    val price_builder = MongoDBObject.newBuilder
+    price_builder += "source" -> "My Chemist"
     val price_cur = html.select("div.ProductPage_NormalPrice").text
-    builder += "current_price" -> price_cur 
+    price_builder += "current_price" -> price_cur 
 
     try {
       val price_ori = html.select("span.ProductPage_NormalSRP").first.text
-      builder += "isOnSale" -> true
-      builder += "ori_price" -> price_ori
+      price_builder += "isOnSale" -> true
+      price_builder += "ori_price" -> price_ori
     } catch {
-      case _ => { println("not on sale"); builder += "isOnSale" -> true }
+      case _ => { println("not on sale"); price_builder += "isOnSale" -> true }
     }
-
+    
     /**
-     * 5. save to database
+     * 5. put price in source list
      */
-    val coll = MongoClient()("AlfredTest")("products2")
-    
-    val q = MongoDBObject("name" -> proName)
-    val cursor = coll.findOne(q)      
+    val source_list = MongoDBList.newBuilder
+    source_list += price_builder.result
 
-    val product = builder.result
-    if (cursor == None) coll += product
-    else coll.update(q, product)
+    builder += "prices" -> source_list.result
     
+    /**
+     * 6. save to database
+     */
+    ScraperCache ++ builder.result
+   
     println("paser item end ...")
   }
 }

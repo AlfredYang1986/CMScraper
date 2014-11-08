@@ -4,16 +4,18 @@ import Handler.PageHandler_2
 import Application.ScraperApp
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import DAO.ScraperCache
 
 class MyChemistScraper(p : String, h : String) extends CategoryCrawl {
   def apply(handler :PageHandler_2) = {
-    ScraperApp.printer.writeLine("Chemist Warehouse Scraper Prase Start ...")
+    ScraperApp.printer.writeLine("My Chemist Scraper Prase Start ...")
     enumItems(enumPagesInCategory(getCategoryFromNav), handler)
-    ScraperApp.printer.writeLine("Chemist Warehouse Scraper Prase End...")
+//    ScraperCache.refresh()
+    ScraperApp.printer.writeLine("My Chemist Scraper Prase End...")
   }
 
   def url = p
-  def name = "Chemist Warehouse"
+  def name = "My Chemist"
   override def host = h
     
   def categoryQueryString = "div#MainContent > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > div > a"
