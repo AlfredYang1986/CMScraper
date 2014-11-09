@@ -8,4 +8,7 @@
 	
 	<website name="PriceLine" host="http://www.mychemist.com.au/" url="https://www.priceline.com.au/shop-by-brand?category=mother-and-baby" handler="PriceLineHandler" crawl="PriceLineScraper">
 	</website>
+
+	<website name="Pharmacy Direct" host="no need" url="http://www.pharmacydirect.com.au/product_search.aspx?st=departments&webdep=10" handler="PharmacyDirectHandler" crawl="PharmacyDirectScraper">
+	</website>
 </Scraper>
