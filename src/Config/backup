@@ -5,4 +5,7 @@
 	
 	<website name="MyChemist" host="http://www.mychemist.com.au/" url="http://www.mychemist.com.au/categories.asp" handler="MyChemistHandler" crawl="MyChemistScraper">
 	</website>
+	
+	<website name="PriceLine" host="http://www.mychemist.com.au/" url="https://www.priceline.com.au/shop-by-brand?category=mother-and-baby" handler="PriceLineHandler" crawl="PriceLineScraper">
+	</website>
 </Scraper>

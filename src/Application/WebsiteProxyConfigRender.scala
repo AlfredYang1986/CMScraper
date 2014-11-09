@@ -11,6 +11,7 @@ object WebsiteProxyConfigRender {
 			str match {
 			  case "ChemistWarehouseScraper" => new ChemistWarehouseScraper(url, host)
 			  case "MyChemistScraper" => new MyChemistScraper(url, host)
+			  case "PriceLineScraper" => new PriceLineScraper(url, host)
 			  case _ => null
 			}
 		}
@@ -19,6 +20,7 @@ object WebsiteProxyConfigRender {
 			str match {
 			  case "ChemistWarehouseHandler" => new ChemistWarehouseHandler
 			  case "MyChemistHandler" => new MyChemistHandler 
+			  case "PriceLineHandler" => new PriceLineHandler
 			  case _ => null
 			}
 		}
