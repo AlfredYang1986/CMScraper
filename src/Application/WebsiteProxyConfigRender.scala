@@ -22,7 +22,7 @@ object WebsiteProxyConfigRender {
 			  case "ChemistWarehouseHandler" => new ChemistWarehouseHandler
 			  case "MyChemistHandler" => new MyChemistHandler 
 			  case "PriceLineHandler" => new PriceLineHandler
-			  case "PharmacyDirectHandler" => new PharmacyDirectHandler
+			  case "PharmacyDirectHandler" => new PharmacyDircetHandler
 			  case _ => null
 			}
 		}
