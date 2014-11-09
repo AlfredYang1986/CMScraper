@@ -27,7 +27,7 @@ class PharmacyDirectScraper(p : String, h : String) extends CategoryCrawl {
   def cateUrlFromNode : Element => String = _.attr("href")
   def itemUrlFromPage: Element => String = _.attr("href")
 
-  def urlForNextPage(html : Document, baseUrl : String, pgeIndex : Int) : String = baseUrl.substring(0, baseUrl.lastIndexOf(")")) + "/" + pgeIndex
+  def urlForNextPage(html : Document, baseUrl : String, pgeIndex : Int) : String = baseUrl.substring(0, baseUrl.lastIndexOf("/")) + "/" + pgeIndex
   def enumLoop(html : Document, page : String, PrintFunc : (Int, Int) => Unit) : List[String] = {
       var reVal : List[String] = Nil
     val pgeSize = itmesPerPage(html)
