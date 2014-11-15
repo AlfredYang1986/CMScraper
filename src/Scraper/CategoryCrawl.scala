@@ -20,8 +20,8 @@ trait CategoryCrawl extends Crawl_2 {
 
 	def getCategoryFromNav : List[String] = 
       Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(categoryQueryString)
-//			    .asScala.toList filter cateUrlFilter map cateUrlFromNode
-//			    .asScala.toList map cateUrlFromNode
+//			    .asScala.toList.distinct filter cateUrlFilter map cateUrlFromNode
+//			    .asScala.toList.distinct map cateUrlFromNode
           .asScala.toList.head :: Nil map cateUrlFromNode // only first for
 		
 	/**
@@ -43,7 +43,7 @@ trait CategoryCrawl extends Crawl_2 {
 	
 	def enumItemInCategory(cate : String) : List[String] =
     Jsoup.connect(cate).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(itemQueryString)
-			.asScala.toList map itemUrlFromPage
+			.asScala.toList.distinct map itemUrlFromPage
 //			.asScala.toList.head :: Nil map itemUrlFromPage  // only first for test
 			
 	def enumPagesInCategory(categories : List[String]) : List[String] = {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scraper>
-	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/nappies-wipes-skincare.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	<website name="toysrus" host="http://www.toysrus.com.au/" url="http://www.toysrus.com.au" handler="ToysrusHandler" crawl="ToysrusScraper">
 	</website>
 </Scraper>
