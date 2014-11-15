@@ -35,4 +35,10 @@
 
 	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/nappies-wipes-skincare.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
 	</website>
+
+	<website name="toysrus" host="http://www.toysrus.com.au/" url="http://www.toysrus.com.au" handler="ToysrusHandler" crawl="ToysrusScraper">
+	</website>
+
+	<website name="MyBabyWarehouse" host="http://www.mybabywarehouse.com.au/" url="http://www.mybabywarehouse.com.au" handler="MyBabyWarehouseHandler" crawl="MyBabyWarehouseScraper">
+	</website>
 </Scraper>
