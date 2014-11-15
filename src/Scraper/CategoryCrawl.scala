@@ -17,12 +17,12 @@ trait CategoryCrawl extends Crawl_2 {
 	def categoryQueryString : String
 	def cateUrlFromNode : Element => String
 	def cateUrlFilter : Element => Boolean = _ => true
-	
+
 	def getCategoryFromNav : List[String] = 
-		Jsoup.connect(url).timeout(0).get.select(categoryQueryString)
-//			.asScala.toList filter cateUrlFilter map cateUrlFromNode
-//			.asScala.toList map cateUrlFromNode
-			.asScala.toList.head :: Nil map cateUrlFromNode // only first for test
+      Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(categoryQueryString)
+//			    .asScala.toList filter cateUrlFilter map cateUrlFromNode
+//			    .asScala.toList map cateUrlFromNode
+          .asScala.toList.head :: Nil map cateUrlFromNode // only first for
 		
 	/**
 	 * 2. get current page items
@@ -42,13 +42,13 @@ trait CategoryCrawl extends Crawl_2 {
 		ScraperApp.printer.writeLine("now processing " + s + " of " + t + " items")
 	
 	def enumItemInCategory(cate : String) : List[String] =
-		Jsoup.connect(cate).timeout(0).get.select(itemQueryString)
+    Jsoup.connect(cate).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(itemQueryString)
 			.asScala.toList map itemUrlFromPage
 //			.asScala.toList.head :: Nil map itemUrlFromPage  // only first for test
 			
 	def enumPagesInCategory(categories : List[String]) : List[String] = {
 		def enumPages(page : String) : List[String] = {
-			val html = Jsoup.connect(page).timeout(0).get
+			val html = Jsoup.connect(page).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get
 			enumLoop(html, page, enumLoopPrintFunc)
 		}
 		
@@ -64,5 +64,5 @@ trait CategoryCrawl extends Crawl_2 {
 	 * 3. handler url to item
 	 */
 	def enumItems(itemUrls : List[String], handler : PageHandler_2) = 
-		itemUrls map (handler(_, host))
+    itemUrls map (handler(_, host))
 }

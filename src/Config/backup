@@ -11,4 +11,28 @@
 
 	<website name="PharmacyDirect" host="" url="http://www.pharmacydirect.com.au/product_search.aspx?st=departments&webdep=10" handler="PharmacyDirectHandler" crawl="PharmacyDirectScraper">
 	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/prams.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/car-seats-carriers.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/cots-changetables-furniture.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/clothing-swaddling-manchester.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/highchairs-feeding-bottles.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/gates-playpens-monitors-safety.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/toys-bouncers-swings-trikes.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/nappies-wipes-skincare.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
 </Scraper>

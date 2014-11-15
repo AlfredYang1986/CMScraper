@@ -13,6 +13,7 @@ object WebsiteProxyConfigRender {
 			  case "MyChemistScraper" => new MyChemistScraper(url, host)
 			  case "PriceLineScraper" => new PriceLineScraper(url, host)
 			  case "PharmacyDirectScraper" => new PharmacyDirectScraper(url, host)
+			  case "BabyBuntingScraper" => new BabyBuntingScraper(url, host)
 			  case _ => null
 			}
 		}
@@ -23,6 +24,7 @@ object WebsiteProxyConfigRender {
 			  case "MyChemistHandler" => new MyChemistHandler 
 			  case "PriceLineHandler" => new PriceLineHandler
 			  case "PharmacyDirectHandler" => new PharmacyDircetHandler
+			  case "BabyBuntingHandler" => new BabyBuntingHandler
 			  case _ => null
 			}
 		}
