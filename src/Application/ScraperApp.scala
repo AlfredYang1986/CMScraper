@@ -24,5 +24,5 @@ object ScraperApp extends App {
 	 */
 	printer.writeLine("Scraper running ...")
 	WebsiteProxyConfigRender("src/Config/Config.xml") map (_.apply)
-  ScraperCache.refresh()
+	ScraperCache.refresh()
 }
