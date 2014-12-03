@@ -1,0 +1,32 @@
+<?xml   version="1.0"   encoding="utf-8"?>
+<baby>
+	<cats>
+		<cat value="Baby Bathing">
+			<subcat>Bady Powder</subcat>
+			<subcat>Baby Shampoo &amp; Body Wash</subcat>
+			<subcat>Bath Accessories</subcat>
+			<subcat>Lotions</subcat>
+			<subcat>Oil</subcat>
+			<subcat>Baby Cream</subcat>
+		</cat>
+		<cat value="Baby Changing">
+			<subcat>Baby Wipe</subcat>
+			<subcat>Changing Accessories</subcat>
+		</cat>
+		<cat value="Baby Feeding">
+			<subcat>Baby Food</subcat>
+			<subcat>Boby Formula</subcat>
+			<subcat>Bottles &amp; Teats</subcat>
+			<subcat>Feeding Accessories</subcat>
+			<subcat>Warmers &amp; Sterililsers</subcat>
+		</cat>
+		<cat value="Baby Health &amp; Safety">
+			<subcat>Medicine &amp; Vitamins</subcat>
+			<subcat>Thermometers</subcat>
+		</cat>
+		<cat value="Mum &amp; Mum-To-Be">
+			<subcat>Breastcare</subcat>
+			<subcat>Skincare</subcat>
+		</cat>
+	</cats>
+</baby>
