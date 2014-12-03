@@ -23,6 +23,7 @@ object ScraperApp extends App {
 	 * Scraper system started
 	 */
 	printer.writeLine("Scraper running ...")
+	BrandList("src/Config/BabyBrands.xml")
 	WebsiteProxyConfigRender("src/Config/Config.xml") map (_.apply)
 	ScraperCache.refresh()
 }

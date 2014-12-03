@@ -7,6 +7,7 @@ import org.jsoup.nodes.Node
 import org.jsoup.select.Elements
 import com.mongodb.casbah.Imports._
 import DAO.ScraperCache
+import Application.BrandList
 
 class ChemistWarehouseHandler extends PageHandler_2 {
 	def apply(url : String, host : String) = {
@@ -14,20 +15,26 @@ class ChemistWarehouseHandler extends PageHandler_2 {
 		val html = Jsoup.connect(url).timeout(0).get
 		
 		val builder = MongoDBObject.newBuilder
-		/**
-		 * 1. get brand
-		 */
-		val tmp = html.select("div#MainContent > table > tbody > tr > td > div > div > a > b")
-		val brand = tmp.get(tmp.size - 2).text
-		println(brand)
-		builder += "brand" -> brand
-		
+
 		/**
 		 * 2. get product name
 		 */
 		val proName = html.select("div.ProductPage_ProductName").text
 		println(proName)
 		builder += "name" -> proName
+			
+		/**
+		 * 1. get brand
+		 */
+		val tmp = html.select("div#MainContent > table > tbody > tr > td > div > div > a > b")
+		var brand : String = tmp.get(tmp.size - 2).text
+		if (BrandList.brands.contains(brand)) builder += "brand" -> brand	
+		else {
+			val bd = BrandList.brands.find(proName.startsWith(_))
+			if (bd.isEmpty) brand = "Miscellaneous"
+			else brand = bd.get
+		} 
+		println(brand)
 		
 		/**
 		 * 3. get image url
@@ -47,7 +54,7 @@ class ChemistWarehouseHandler extends PageHandler_2 {
 		 * 4. get price
 		 */
 		val price_builder = MongoDBObject.newBuilder
-    price_builder += "source" -> "Chemist Warehouse"
+		price_builder += "source" -> "Chemist Warehouse"
 		val price_cur = html.select("div.ProductPage_NormalPrice").text
 		price_builder += "current_price" -> price_cur 
 

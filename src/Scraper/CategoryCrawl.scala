@@ -20,9 +20,9 @@ trait CategoryCrawl extends Crawl_2 {
 
 	def getCategoryFromNav : List[String] = 
       Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(categoryQueryString)
-//			    .asScala.toList.distinct filter cateUrlFilter map cateUrlFromNode
+			    .asScala.toList.distinct filter cateUrlFilter map cateUrlFromNode
 //			    .asScala.toList.distinct map cateUrlFromNode
-          .asScala.toList.head :: Nil map cateUrlFromNode // only first for
+//          .asScala.toList.head :: Nil map cateUrlFromNode // only first for
 		
 	/**
 	 * 2. get current page items

@@ -6,8 +6,8 @@ import org.jsoup.nodes.Element
 import org.jsoup.nodes.Node
 import org.jsoup.select.Elements
 import DAO.ScraperCache
-
 import com.mongodb.casbah.Imports._
+import Application.BrandList
 
 class MyChemistHandler extends PageHandler_2 {
   def apply(url : String, host : String) = {
@@ -15,20 +15,30 @@ class MyChemistHandler extends PageHandler_2 {
     val html = Jsoup.connect(url).timeout(0).get
     
     val builder = MongoDBObject.newBuilder
+
     /**
-     * 1. get brand
-     */
-    val tmp = html.select("div#MainContent > table > tbody > tr > td > div > div > a > b")
-    val brand = tmp.get(tmp.size - 2).text
-    println(brand)
-    builder += "brand" -> brand
-    
-    /**
-     * 2. get product name
-     */
-    val proName = html.select("div.ProductPage_ProductName").text
-    println(proName)
-    builder += "name" -> proName
+	 * 2. get product name
+	 */
+	val proName = html.select("div.ProductPage_ProductName").text
+	println(proName)
+	builder += "name" -> proName
+			
+	/**
+	 * 1. get brand
+	 */
+	val tmp = html.select("div#MainContent > table > tbody > tr > td > div > div > a > b")
+	var brand : String = tmp.get(tmp.size - 2).text
+	if (BrandList.brands.contains(brand)) builder += "brand" -> brand	
+	else {
+		val bd = BrandList.brands.find(proName.startsWith(_))
+		if (bd.isEmpty) brand = "Miscellaneous"
+		else brand = bd.get
+	} 
+	println(brand)
+	
+	/**
+	 * 1.1 get what it for category
+	 */
     
     /**
      * 3. get image url
