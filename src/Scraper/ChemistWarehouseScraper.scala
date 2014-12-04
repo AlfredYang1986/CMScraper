@@ -17,7 +17,7 @@ class ChemistWarehouseScraper(p : String, h : String) extends CategoryCrawl {
 	def url = p
 	def name = "Chemist Warehouse"
 	override def host = h
-	override def cateUrlFilter : Element => Boolean = x => x.text == "Baby Care" || x.text.contains("kids")
+	override def cateUrlFilter : Element => Boolean = x => x.text == "Baby Care" || x.text.contains("Kids")
 //	  (_.text == "Baby Care") || (_.text.contains("kids"))
 	  
 	def categoryQueryString = "div#MainContent > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > div > a"
@@ -39,7 +39,7 @@ class ChemistWarehouseScraper(p : String, h : String) extends CategoryCrawl {
 	
 		for (index <- 0 to totalItemInCat / pgeSize) {
 		  	val next = urlForNextPage(html, page, index + 1)
-			if (next != null) reVal = reVal ::: enumItemInCategory(next)
+			if (next != null) reVal = reVal ::: enumItemInCategory(next).distinct
 			ScraperApp.printer.writeLine("now processing " + reVal.size + " of " + totalItemInCat + " items")
 		}
 		reVal

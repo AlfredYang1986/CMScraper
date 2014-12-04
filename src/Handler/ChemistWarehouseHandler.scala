@@ -36,6 +36,14 @@ class ChemistWarehouseHandler extends PageHandler_2 {
 			else brand = bd.get.name
 		} 
 		println(brand)
+
+		/**
+		 * 1.1 get what it for category
+		 * 		1.1.1 if brand occurs, previous is 
+		 *   	1.1.2 if brand starts, previous is 
+		 *    	1.1.3 if none brands, last one is
+		 */
+	
 		
 		/**
 		 * 3. get image url
