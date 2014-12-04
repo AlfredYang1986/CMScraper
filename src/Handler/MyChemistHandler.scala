@@ -8,6 +8,7 @@ import org.jsoup.select.Elements
 import DAO.ScraperCache
 import com.mongodb.casbah.Imports._
 import Application.BrandList
+import Application.BrandList.brandNode
 
 class MyChemistHandler extends PageHandler_2 {
   def apply(url : String, host : String) = {
@@ -28,11 +29,11 @@ class MyChemistHandler extends PageHandler_2 {
 	 */
 	val tmp = html.select("div#MainContent > table > tbody > tr > td > div > div > a > b")
 	var brand : String = tmp.get(tmp.size - 2).text
-	if (BrandList.brands.contains(brand)) builder += "brand" -> brand	
+	if (BrandList.contains(brand)) builder += "brand" -> brand	
 	else {
-		val bd = BrandList.brands.find(proName.startsWith(_))
+		val bd = BrandList.brands.find(x => proName.startsWith(x.name))
 		if (bd.isEmpty) brand = "Miscellaneous"
-		else brand = bd.get
+		else brand = bd.get.name
 	} 
 	println(brand)
 	
