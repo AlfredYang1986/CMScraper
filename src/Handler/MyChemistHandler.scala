@@ -39,7 +39,31 @@ class MyChemistHandler extends PageHandler_2 {
 	
 	/**
 	 * 1.1 get what it for category
+	 * 		1.1.1 if brand occurs, previous is 
+	 *   	1.1.2 if brand starts, previous is 
+	 *    	1.1.3 if none brands, last one is
 	 */
+	def getCategory : String = {
+		def getCatIter(cur : List[String], xsl : List[String]) : String = {
+			if (cur.isEmpty) xsl.head
+			  
+			else if (cur.head.startsWith(brand))
+				if (cur.tail.isEmpty) "Miscellaneous"
+				else cur.tail.head
+			else getCatIter(cur.tail, xsl)
+		}
+		  
+		val tmp = html.select("div#MainContent > table > tbody > tr > td > div > div > a > b")
+		
+		var candi : List[String] = Nil
+		for (index <- 1 to tmp.size - 1)
+			candi = tmp.get(index).text :: candi
+		  
+		val reVal = getCatIter(candi, candi)
+		println(reVal)
+		reVal
+	}
+	builder += "cat" -> getCategory
     
     /**
      * 3. get image url
