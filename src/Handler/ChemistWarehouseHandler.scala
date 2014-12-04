@@ -9,6 +9,7 @@ import com.mongodb.casbah.Imports._
 import DAO.ScraperCache
 import Application.BrandList
 import Application.BrandList.brandNode
+import Handler.categoryMapping.ChemitWarehouseAndMyChemitMapping
 
 class ChemistWarehouseHandler extends PageHandler_2 {
 	def apply(url : String, host : String) = {
@@ -64,7 +65,7 @@ class ChemistWarehouseHandler extends PageHandler_2 {
 			println(reVal)
 			reVal
 		}
-		builder += "cat" -> getCategory
+		builder += "cat" -> ChemitWarehouseAndMyChemitMapping(getCategory)
 
 		/**
 		 * 3. get image url
