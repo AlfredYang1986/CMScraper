@@ -64,7 +64,7 @@ class MyChemistHandler extends PageHandler_2 {
 		println(reVal)
 		reVal
 	}
-	builder += "cat" -> ChemitWarehouseAndMyChemitMapping(getCategory)
+	builder += "cat" -> ChemitWarehouseAndMyChemitMapping(getCategory, proName)
     
     /**
      * 3. get image url

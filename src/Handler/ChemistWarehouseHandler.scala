@@ -51,6 +51,7 @@ class ChemistWarehouseHandler extends PageHandler_2 {
 			  
 				else if (cur.head.startsWith(brand))
 					if (cur.tail.isEmpty) "Miscellaneous"
+					else if (cur.tail.head.startsWith(brand)) getCatIter(cur.tail, xsl)
 					else cur.tail.head
 				else getCatIter(cur.tail, xsl)
 			}
@@ -65,7 +66,7 @@ class ChemistWarehouseHandler extends PageHandler_2 {
 			println(reVal)
 			reVal
 		}
-		builder += "cat" -> ChemitWarehouseAndMyChemitMapping(getCategory)
+		builder += "cat" -> ChemitWarehouseAndMyChemitMapping(getCategory, proName)
 
 		/**
 		 * 3. get image url

@@ -1,6 +1,8 @@
 package DAO
 
 import com.mongodb.casbah.Imports._
+import Application.CateList
+import Application.BrandList
 
 object ScraperCache {
 
@@ -13,8 +15,13 @@ object ScraperCache {
                 MongoDBCollManager.getCollectionSafe(name) += xls.head
                 refreshAcc(xls.tail) 
             }
-        
-        if (!cache.isEmpty) refreshAcc(cache)
+       
+        if (!cache.isEmpty) {
+        		if (MongoDBCollManager.isCollectionExist(name)) 
+        			MongoDBCollManager.removeCollection(name)
+        		
+        		refreshAcc(cache)
+        }
     }
    
     /**
@@ -46,5 +53,17 @@ object ScraperCache {
          * 1. first check the has project or not      
          */
         cache = unionInCache :: cache.filter { _.get("name") != newObj.get("name") }
+        
+        val brand = newObj.get("brand").get.asInstanceOf[String]
+        val cat = newObj.get("cat").get.asInstanceOf[String]
+        /**
+         * 4. add brands for this category
+         */
+        CateList.insertBrandForCat(brand, cat)
+        
+        /**
+         * 5. add category for brands
+         */
+        BrandList.insertCatForBrand(cat, brand)
     }
 }
