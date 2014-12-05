@@ -30,6 +30,13 @@ class PriceLineHandler extends PageHandler_2 {
         val proName = html.select("div.product-name-size").text
         println(proName)
         builder += "name" -> proName
+       
+        /**
+         * 1.1 get category
+         */
+        val catName = html.select("div.b2c_breadcump > a").last.text
+        println(catName)
+        builder += "cat" -> catName
         
         /**
          * 3. get image url
@@ -72,6 +79,7 @@ class PriceLineHandler extends PageHandler_2 {
         /**
          * 6. save to database
          */
+        println(builder.result)
         ScraperCache ++ builder.result
         
         println("paser item end ...")

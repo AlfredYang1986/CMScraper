@@ -44,7 +44,6 @@ object CateList {
 			val brandList = MongoDBList.newBuilder
 			iter.relateBrands map (br => brandList += br)
 			builder += "relateBrands" -> brandList.result
-			println(brandList.result)
 			
 			builder += "isLeaf" -> iter.isLeaf
 			MongoDBCollManager.insert("cats")(builder.result)		  		

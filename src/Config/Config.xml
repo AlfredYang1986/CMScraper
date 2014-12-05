@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scraper>
-	<website name="ChemistWarehouse" host="http://www.chemistwarehouse.com.au/" url="http://www.chemistwarehouse.com.au/categories.asp" handler="ChemistWarehouseHandler" crawl="ChemistWarehouseScraper">
+	<website name="PriceLine" host="https://www.priceline.com.au/" url="https://www.priceline.com.au/shop-by-brand?page=2&amp;category=mother-and-baby" handler="PriceLineHandler" crawl="PriceLineScraper">
 	</website>
 </Scraper>

@@ -9,6 +9,12 @@
 	<website name="PriceLine" host="https://www.priceline.com.au/" url="https://www.priceline.com.au/shop-by-brand?category=mother-and-baby" handler="PriceLineHandler" crawl="PriceLineScraper">
 	</website>
 
+	<website name="PriceLine" host="https://www.priceline.com.au/" url="https://www.priceline.com.au/shop-by-brand?page=2&amp;category=mother-and-baby" handler="PriceLineHandler" crawl="PriceLineScraper">
+	</website>
+
+	<website name="PriceLine" host="https://www.priceline.com.au/" url="https://www.priceline.com.au/shop-by-brand?page=3&amp;category=mother-and-baby" handler="PriceLineHandler" crawl="PriceLineScraper">
+	</website>
+
 	<website name="PharmacyDirect" host="" url="http://www.pharmacydirect.com.au/product_search.aspx?st=departments&webdep=10" handler="PharmacyDirectHandler" crawl="PharmacyDirectScraper">
 	</website>
 
