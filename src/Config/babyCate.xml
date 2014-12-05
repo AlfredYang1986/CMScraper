@@ -15,7 +15,7 @@
 		</cat>
 		<cat value="Baby Feeding">
 			<subcat>Baby Food</subcat>
-			<subcat>Boby Formula</subcat>
+			<subcat>Baby Formula</subcat>
 			<subcat>Bottles &amp; Teats</subcat>
 			<subcat>Feeding Accessories</subcat>
 			<subcat>Warmers &amp; Sterililsers</subcat>
@@ -25,6 +25,7 @@
 			<subcat>Thermometers</subcat>
 		</cat>
 		<cat value="Baby Accessories">
+			<subcat>Baby Accessories</subcat>
 		</cat>
 		<cat value="Mum &amp; Mum-To-Be">
 			<subcat>Breastcare</subcat>

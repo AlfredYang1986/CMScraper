@@ -7,9 +7,9 @@ object ChemitWarehouseAndMyChemitMapping {
 			else if (name.toLowerCase.contains("breast")) "Feeding Accessories"
 			else can
 		} else if (can == "Baby Creams and Lotions") {
-			if (name.toLowerCase.contains("cream")) "Bady Cream & Ointment"
+			if (name.toLowerCase.contains("cream")) "Bady Cream"
 			else "Lotions"
-		} else if (can == "Baby Shampoo and Conditioners") "Bady Shampoo & Body Wash"
+		} else if (can == "Baby Shampoo and Conditioners") "Baby Shampoo & Body Wash"
 		else if (can == "Baby Medical and Vitamins") "Medical & Vitamins"
 		else if (can == "Breast Pads, Shields and Cream") "Bath Acessories"
 		else if (can == "Baby Nappies") "Changing Accessories"
