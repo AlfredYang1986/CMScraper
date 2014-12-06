@@ -28,7 +28,6 @@ object CateList {
 			if (!tmp.isEmpty) {
 				tmp.get.relateBrands = brandName :: tmp.get.relateBrands
 				tmp.get.relateBrands = tmp.get.relateBrands.distinct
-				println(tmp.get.relateBrands)
 			}
 		}
 	}

@@ -14,7 +14,6 @@ object ChemitWarehouseAndMyChemitMapping {
 		else if (can == "Breast Pads, Shields and Cream") "Bath Acessories"
 		else if (can == "Baby Nappies") "Changing Accessories"
 		else if (can == "Baby Oils") "Oil"
-		else if (can == "Baby Wipes") "Baby Wipe"
 		else if (can == "Baby Accessories Miscellaneous") {
 			if (name.toLowerCase.contains("bottle") || name.toLowerCase.contains("cup")) "Bottles & Teats"
 			else if (name.toLowerCase.contains("breast")) "Feeding Accessories"

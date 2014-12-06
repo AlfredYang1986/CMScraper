@@ -6,8 +6,8 @@ import org.jsoup.nodes.Element
 import org.jsoup.nodes.Node
 import org.jsoup.select.Elements
 import DAO.ScraperCache
-
 import com.mongodb.casbah.Imports._
+import Application.BrandList
 
 class PharmacyDircetHandler extends PageHandler_2 {
     def apply(url : String, host : String) = {
@@ -17,19 +17,23 @@ class PharmacyDircetHandler extends PageHandler_2 {
     
         val builder = MongoDBObject.newBuilder
         /**
-         * 1. get brand
-         */
-        val tmp = html.select("div.product-details-layout-2-right > div > h2")
-        val brand = tmp.text
-        println(brand)
-        builder += "brand" -> brand
-        
-        /**
          * 2. get name
          */
-        val proName = html.select("div.product-details-layout-2-right > div > h2")
+        val proName = html.select("div.product-details-layout-2-right > div > h2").text
         println(proName)
         builder += "name" -> proName
+        
+        /**
+         * 1. get brand
+         */
+        val can = BrandList.brands.find(x => proName.toLowerCase.startsWith(x.name.toLowerCase))
+        if (can.isEmpty) builder += "brand" -> "Unknown"
+        else builder += "brand" -> can.get.name
+
+        /**
+		 * 1.1 get what it for category
+		 */
+        
         
         /**
          * 3. get image url

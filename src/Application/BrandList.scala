@@ -15,7 +15,7 @@ object BrandList {
 	def contains(n : String) : Boolean = !(brands.find(x => x.name == n).isEmpty)
 
 	def insertCatForBrand(catName : String, brandName : String) = {
-		val tmp = brands.find(_.name == brandName)
+		val tmp = brands.find(_.name.toLowerCase == brandName.toLowerCase)
 		if (!tmp.isEmpty) {
 			tmp.get.relateCats = catName :: tmp.get.relateCats
 			tmp.get.relateCats = tmp.get.relateCats.distinct
