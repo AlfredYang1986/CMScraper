@@ -1,7 +1,8 @@
 package Handler
 
+import Scraper.ItemNode
+
 trait PageHandler_2 {
-//	def parseItem(url : String)
-	def apply(url : String, host : String)
-//	def url : String
+//	def apply(url : String, host : String)
+	def apply(node : ItemNode, host : String)
 }

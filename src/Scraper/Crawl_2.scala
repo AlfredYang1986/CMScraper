@@ -8,3 +8,8 @@ trait Crawl_2 {
 	def name : String
 	def host : String = ""
 }
+
+/**
+ * 4. inject category for some url which does not put the category in item page
+ */
+case class ItemNode(url : String, other : Object)

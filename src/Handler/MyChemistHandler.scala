@@ -10,9 +10,13 @@ import com.mongodb.casbah.Imports._
 import Application.BrandList
 import Application.BrandList.brandNode
 import Handler.categoryMapping.ChemitWarehouseAndMyChemitMapping
+import Scraper.ItemNode
 
 class MyChemistHandler extends PageHandler_2 {
-  def apply(url : String, host : String) = {
+//  def apply(url : String, host : String) = {
+  def apply(node : ItemNode, host : String) = {
+    val url = node.url
+    
     println("paser item begin ...")
     val html = Jsoup.connect(url).timeout(0).get
     
