@@ -40,20 +40,23 @@ trait CategoryCrawl extends Crawl_2 {
 	def enumLoop(html : Document, page : String, PrintFunc : (Int, Int) => Unit) : List[String]
 	def enumLoopPrintFunc(s : Int, t : Int) = 
 		ScraperApp.printer.writeLine("now processing " + s + " of " + t + " items")
-	
+
 	def enumItemInCategory(cate : String) : List[String] =
     		Jsoup.connect(cate).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(itemQueryString)
 			.asScala.toList.distinct map itemUrlFromPage
 //			.asScala.toList.head :: Nil map itemUrlFromPage  // only first for test
 //			.asScala.toList.distinct.take(20) map itemUrlFromPage  // only top 100 for test
+	
+	def categoryPageInfo(html : Document) = ""
 			
 //	def enumPagesInCategory(categories : List[String]) : List[String] = {
 	def enumPagesInCategory(categories : List[String]) : List[ItemNode] = {
 //		def enumPages(page : String) : List[String] = {
 		def enumPages(page : String) : List[ItemNode] = {
 			val html = Jsoup.connect(page).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get
-//			new ItemNode(enumLoop(html, page, enumLoopPrintFunc), "test")
-			enumLoop(html, page, enumLoopPrintFunc) map (new ItemNode(_, "test"))
+			val cat = categoryPageInfo(html)
+			println(cat)
+			enumLoop(html, page, enumLoopPrintFunc) map (new ItemNode(_, cat))
 		}
 		
 		ScraperApp.printer.writeLine("there are " + categories.size + " categories")
@@ -68,6 +71,12 @@ trait CategoryCrawl extends Crawl_2 {
 	 * 3. handler url to item
 	 */
 //	def enumItems(itemUrls : List[String], handler : PageHandler_2) = 
-	def enumItems(itemUrls : List[ItemNode], handler : PageHandler_2) = 
-			itemUrls map (handler(_, host))
+	def enumItems(itemUrls : List[ItemNode], handler : PageHandler_2) = itemUrls map { 
+			try {
+				handler(_, host) 
+			  
+			} catch {
+			  case _ => "error on parse \n" + _.url 
+			}
+		}
 }

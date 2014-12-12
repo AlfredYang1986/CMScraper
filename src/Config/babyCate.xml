@@ -17,6 +17,7 @@
 			<subcat>Baby Food</subcat>
 			<subcat>Baby Formula</subcat>
 			<subcat>Bottles &amp; Teats</subcat>
+			<subcat>Breast Feeding</subcat>
 			<subcat>Feeding Accessories</subcat>
 			<subcat>Warmers &amp; Sterililsers</subcat>
 		</cat>
@@ -26,10 +27,46 @@
 		</cat>
 		<cat value="Baby Accessories">
 			<subcat>Baby Accessories</subcat>
+			<subcat>Baby Carriers</subcat>
+			<subcat>Nappy Bags</subcat>
 		</cat>
 		<cat value="Mum &amp; Mum-To-Be">
 			<subcat>Breastcare</subcat>
 			<subcat>Skincare</subcat>
+		</cat>
+		<cat value="Prams">
+			<subcat>Prams</subcat>
+			<subcat>Prams Accessories</subcat>
+		</cat>
+		<cat value="Car Seats">
+			<subcat>Car Seats</subcat>
+			<subcat>Car Seat Accessories</subcat>
+			<subcat>Car Accessories</subcat>
+		</cat>
+		<cat value="Furniture">
+			<subcat>Cots</subcat>
+			<subcat>Beds</subcat>
+			<subcat>Furniture</subcat>
+			<subcat>Change Tables</subcat>
+			<subcat>High Chairs</subcat>
+			<subcat>Furniture Accessories</subcat>
+		</cat>
+		<cat value="Clothing, Swaddling">
+			<subcat>Sheets</subcat>
+			<subcat>Quilts</subcat>
+			<subcat>Blankets</subcat>
+			<subcat>Pillows</subcat>
+			<subcat>Sleepingsuits</subcat>
+			<subcat>Babywear</subcat>
+			<subcat>Underwear</subcat>
+			<subcat>Outerwear</subcat>
+		</cat>
+		<cat value="Toys">
+			<subcat>Swings</subcat>
+			<subcat>Outdoor Toys</subcat>
+			<subcat>Indoor Toys</subcat>
+			<subcat>Books &amp; CD's</subcat>
+			<subcat>Walkers</subcat>
 		</cat>
 	</cats>
 </baby>

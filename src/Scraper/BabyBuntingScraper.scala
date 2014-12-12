@@ -44,4 +44,6 @@ class BabyBuntingScraper(p : String, h : String) extends CategoryCrawl {
     }
     reVal
   }
+	
+  override def categoryPageInfo(html : Document) = html.select("ul#vertnav > li.active > span > a > span").text
 }

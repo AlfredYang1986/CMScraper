@@ -22,7 +22,16 @@ class MyBabyWarehouseHandler extends PageHandler_2 {
         /**
          * 1. get brand
          */
-        builder += "brand" -> "My Baby Warehouse"
+        val tmpBrand = html.select("#product-attribute-specs-table > tbody > tr").get(1).children().select("td").last.text
+        println(tmpBrand)
+        builder += "brand" -> html.select("#product-attribute-specs-table > tbody > tr").get(1).children().select("td").last.text
+        
+        /**
+         * 1.1 get categories
+         */
+        val tmpCategory = html.select("#site-container > div > div > div > ul > li > a").last.text
+        println(tmpCategory)
+        builder += "cat" -> html.select("#site-container > div > div > div > ul > li > a").last.text
         
         /**
          * 2. get product name

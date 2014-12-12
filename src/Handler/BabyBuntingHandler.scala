@@ -9,15 +9,23 @@ import DAO.ScraperCache
 import com.mongodb.casbah.Imports._
 import Application.BrandList
 import Scraper.ItemNode
+import Handler.categoryMapping.BabyBuningMapping
 
 class BabyBuntingHandler extends PageHandler_2 {
 //    def apply(url : String, host : String) = {
-    def apply(node : ItemNode, host : String) = {
-        println("paser item begin ...")
-        
+    def apply(node : ItemNode, host : String) : Unit = {
         val url = node.url
         
-        val html = Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get
+        println("paser item begin ...")
+        
+        
+        var html : Document = null
+        
+        try {
+          html = Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get
+        } catch {
+          case _ => return Unit
+        }
     
         val builder = MongoDBObject.newBuilder
         /**
@@ -33,6 +41,12 @@ class BabyBuntingHandler extends PageHandler_2 {
         val can = BrandList.brands.find(x => proName.toLowerCase.startsWith(x.name.toLowerCase))
         if (can.isEmpty) builder += "brand" -> "Unknown"
         else builder += "brand" -> can.get.name
+        
+        /**
+         * 1.1 get cat
+         */
+//		builder += "cat" -> BabyBuningMapping(node.other.asInstanceOf[String], "")
+		builder += "cat" -> node.other.asInstanceOf[String]
         
         /**
          * 3. get image url
@@ -55,7 +69,7 @@ class BabyBuntingHandler extends PageHandler_2 {
         price_builder += "source" -> "Baby Bunting"
         
         try {
-          val price_ori = html.select("p.old-price > span").text
+          val price_ori = html.select("p.old-price > span").first.text
           price_builder += "isOnSale" -> true
           price_builder += "ori_price" -> price_ori
           println(price_ori)

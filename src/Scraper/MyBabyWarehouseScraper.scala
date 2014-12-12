@@ -21,6 +21,8 @@ class MyBabyWarehouseScraper(p : String, h : String) extends CategoryCrawl {
   def itemQueryString = "ul.products-grid > li > a"
   def itmesPerPage(html : Document) : Int = 0
 
+  override def cateUrlFilter : Element => Boolean = !_.text.contains("Brands")
+
   def totalItemsInCategory(html : Document) : Int = html.select("p.amount").first.text.trim.split(" ").last.toInt 
 
   def cateUrlFromNode : Element => String = _.attr("href")
