@@ -17,7 +17,7 @@ class BabyBuntingScraper(p : String, h : String) extends CategoryCrawl {
   def name = "Baby Bunting"
   override def host = h
     
-  def categoryQueryString = "div.nav-title1 > div > ul > li > a"
+  def categoryQueryString = "div.category-view > div > div > ul > li > a"
   def itemQueryString = "ul.products-grid > li > div > div > a"
   def itmesPerPage(html : Document) : Int = 30
 
