@@ -25,8 +25,8 @@ object ScraperApp extends App {
 	printer.writeLine("Scraper running ...")
 	BrandList("src/Config/BabyBrands.xml")
 	CateList("src/Config/babyCate.xml")
-	WebsiteProxyConfigRender("src/Config/Config.xml") map (_.apply)
-	ScraperCache.refresh()
+//	WebsiteProxyConfigRender("src/Config/Config.xml") map (_.apply)
+//	ScraperCache.refresh()
 	BrandList.save
 	CateList.save
 }

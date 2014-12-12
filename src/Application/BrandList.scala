@@ -48,12 +48,8 @@ object BrandList {
 	}
 	
 	def apply(path : String) = {
-		try {
-			(XML.loadFile(path) \\ "brand") map { nd =>
-			  	brands = new brandNode(nd.text) :: brands
-			}
-		} catch {
-		  	case _ => ScraperApp.printer.writeLine("file not exist or something wrong with prasing")
-		}
+		new XMlBrandExtention()(path)
+		new ToysRusUrlBrandExtention()("http://www.toysrus.com.au/brands/")
+		new MyBabyWarehouseUrlBrandExtention()("http://mybabywarehouse.com.au/baby-brands.html?___SID=U")
 	}
 }
