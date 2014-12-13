@@ -5,6 +5,8 @@ import Application.ScraperApp
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import DAO.ScraperCache
+import Application.JSoapConnectionManager
+import scala.collection.JavaConverters._
 
 class ToysrusScraper(p : String, h : String) extends CategoryCrawl {
   def apply(handler :PageHandler_2) = {
@@ -18,10 +20,12 @@ class ToysrusScraper(p : String, h : String) extends CategoryCrawl {
   override def host = h
     
   def categoryQueryString = "div.menuByCategory > div > ul > li > a"
-  def itemQueryString = "div.productImageCell > span > a"
+  override def itemQueryString = "div.productImageCell > span > a"
   def itmesPerPage(html : Document) : Int = 0
 
   def totalItemsInCategory(html : Document) : Int = 0  
+
+  override def cateUrlFilter : Element => Boolean = _.children().size > 0
 
   def cateUrlFromNode : Element => String = _.attr("href")
   def itemUrlFromPage: Element => String = _.attr("href")
@@ -32,20 +36,23 @@ class ToysrusScraper(p : String, h : String) extends CategoryCrawl {
       else if (baseUrl.endsWith("___")) reUrl = baseUrl.substring(0, baseUrl.length - 5)
       else reUrl = baseUrl
   
-      "%s_%d___".format(reUrl, pgeIndex)
+      "%s_%d___/".format(reUrl, pgeIndex)
   }
   def enumLoop(html : Document, page : String, PrintFunc : (Int, Int) => Unit) : List[String] = {
       var reVal : List[String] = Nil
 //    val pgeSize = itmesPerPage(html)
 //    val totalItemInCat = totalItemsInCategory(html)
 //    totalPrintFunc(totalItemInCat)
-      val totalPages = html.select("table.pfproductcategorypaging > tbody > tr > td > b")
-                          .first.text.trim.split(" ").last.toInt
+      val totalPageElement = html.select("table.pfproductcategorypaging > tbody > tr > td > b")
+      val totalPages =  if (totalPageElement.size == 0) 1
+      					else totalPageElement.first.text.trim.split(" ").last.toInt
+
       println("there are %d pages in this category".format(totalPages))
       
       for (index <- 1 to totalPages) {
           val next = urlForNextPage(html, page, index)
           if (next != null) reVal = reVal ::: enumItemInCategory(next)
+          println("now processing page %d".format(index))
       }
       reVal
   }

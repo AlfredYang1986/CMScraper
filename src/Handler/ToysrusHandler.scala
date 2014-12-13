@@ -8,6 +8,8 @@ import org.jsoup.select.Elements
 import DAO.ScraperCache
 import com.mongodb.casbah.Imports._
 import Scraper.ItemNode
+import Application.BrandList
+import Application.JSoapConnectionManager
 
 class ToysrusHandler extends PageHandler_2 {
 //    def apply(url : String, host : String) = {
@@ -16,13 +18,9 @@ class ToysrusHandler extends PageHandler_2 {
         println("paser item begin ...")
         println(url)
         
-        val html = Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get
-    
+        val html = JSoapConnectionManager(url)
+
         val builder = MongoDBObject.newBuilder
-        /**
-         * 1. get brand
-         */
-        builder += "brand" -> "Toysrus"
         
         /**
          * 2. get product name
@@ -31,6 +29,50 @@ class ToysrusHandler extends PageHandler_2 {
         println(proName)
         builder += "name" -> proName
         
+        /**
+         * 1. get brand
+         */
+		var brand : String = "Unknown"
+	
+		val bd = BrandList.brands.find(x => proName.startsWith(x.name))
+		if (bd.isEmpty) brand = "Unknown" 
+		else brand = bd.get.name
+		
+		println(brand)
+		builder += "brand" -> brand
+
+		/**
+		 * 1.1 get what it for category
+		 * 		1.1.1 if brand occurs, previous is 
+		 *   	1.1.2 if brand starts, previous is 
+		 *    	1.1.3 if none brands, last one is
+		 */
+		def getCategory : String = {
+			def getCatIter(cur : List[String], xsl : List[String]) : String = {
+				if (cur.isEmpty) 
+					if (proName == xsl.head) "Miscellaneous"
+					else xsl.head
+			  
+				else if (cur.head.startsWith(brand))
+					if (cur.tail.isEmpty) "Miscellaneous"
+					else if (cur.tail.head.startsWith(brand)) getCatIter(cur.tail, xsl)
+					else cur.tail.head
+				else getCatIter(cur.tail, xsl)
+			}
+		  
+			val tmp = html.select("table.pfNavPath > tbody > tr > td > font > a")
+		
+			var candi : List[String] = Nil
+			for (index <- 1 to tmp.size - 1)
+				candi = tmp.get(index).text :: candi
+		 
+			println(candi)
+			val reVal = getCatIter(candi, candi)
+			println("category : " + reVal)
+			reVal
+		}
+		builder += "cat" -> getCategory
+		
         /**
          * 3. get image url
          */

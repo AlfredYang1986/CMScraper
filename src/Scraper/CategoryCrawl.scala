@@ -9,6 +9,7 @@ import org.jsoup.nodes.Node
 import org.jsoup.select.Elements
 import scala.collection.JavaConverters._
 import Application.ScraperApp
+import Application.JSoapConnectionManager
 
 trait CategoryCrawl extends Crawl_2 {
 	/**
@@ -19,10 +20,11 @@ trait CategoryCrawl extends Crawl_2 {
 	def cateUrlFilter : Element => Boolean = _ => true
 
 	def getCategoryFromNav : List[String] = 
-      Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(categoryQueryString)
+//      Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(categoryQueryString)
+      	JSoapConnectionManager(url).select(categoryQueryString)
 			    .asScala.toList.distinct filter cateUrlFilter map cateUrlFromNode
 //			    .asScala.toList.distinct map cateUrlFromNode
-//          		.asScala.toList.head :: Nil map cateUrlFromNode // only first for
+//          	.asScala.toList.head :: Nil map cateUrlFromNode // only first for
 		
 	/**
 	 * 2. get current page items
@@ -42,7 +44,8 @@ trait CategoryCrawl extends Crawl_2 {
 		ScraperApp.printer.writeLine("now processing " + s + " of " + t + " items")
 
 	def enumItemInCategory(cate : String) : List[String] =
-    		Jsoup.connect(cate).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(itemQueryString)
+//    	Jsoup.connect(cate).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(itemQueryString)
+    	JSoapConnectionManager(cate).select(itemQueryString)
 			.asScala.toList.distinct map itemUrlFromPage
 //			.asScala.toList.head :: Nil map itemUrlFromPage  // only first for test
 //			.asScala.toList.distinct.take(20) map itemUrlFromPage  // only top 100 for test

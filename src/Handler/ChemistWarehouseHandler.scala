@@ -36,7 +36,7 @@ class ChemistWarehouseHandler extends PageHandler_2 {
 		if (BrandList.contains(brand)) builder += "brand" -> brand	
 		else {
 			val bd = BrandList.brands.find(x => proName.startsWith(x.name))
-			if (bd.isEmpty) brand = "Miscellaneous"
+			if (bd.isEmpty) brand = "Unknown"
 			else brand = bd.get.name
 		} 
 		println(brand)
