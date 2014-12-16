@@ -11,13 +11,14 @@ import Application.BrandList
 import Application.BrandList.brandNode
 import Handler.categoryMapping.ChemitWarehouseAndMyChemitMapping
 import Scraper.ItemNode
+import Application.ScraperApp
 
 class MyChemistHandler extends PageHandler_2 {
-//  def apply(url : String, host : String) = {
+  def name = "My Chemist"
   def apply(node : ItemNode, host : String) = {
     val url = node.url
     
-    println("paser item begin ...")
+    ScraperApp.printer.writeLine("paser item begin ...", name)
     val html = Jsoup.connect(url).timeout(0).get
     
     val builder = MongoDBObject.newBuilder
@@ -26,7 +27,7 @@ class MyChemistHandler extends PageHandler_2 {
 	 * 2. get product name
 	 */
 	val proName = html.select("div.ProductPage_ProductName").text
-	println(proName)
+	ScraperApp.printer.writeLine(proName, name)
 	builder += "name" -> proName
 			
 	/**
@@ -40,7 +41,7 @@ class MyChemistHandler extends PageHandler_2 {
 		if (bd.isEmpty) brand = "Unknown"
 		else brand = bd.get.name
 	} 
-	println(brand)
+	ScraperApp.printer.writeLine(brand, name)
 	
 	/**
 	 * 1.1 get what it for category
@@ -65,7 +66,7 @@ class MyChemistHandler extends PageHandler_2 {
 			candi = tmp.get(index).text :: candi
 		  
 		val reVal = getCatIter(candi, candi)
-		println(reVal)
+		ScraperApp.printer.writeLine(reVal, name)
 		reVal
 	}
 	val cat = getCategory
@@ -77,12 +78,12 @@ class MyChemistHandler extends PageHandler_2 {
     try {
       val imgContent = html.select("div.ProductPage_ProdImage > div > a").first
       val imgUrl = host + imgContent.attr("href")
-      println(imgUrl)   
+      ScraperApp.printer.writeLine(imgUrl, name)   
       builder += "imgUrl" -> imgUrl
       builder += "StoreOnly" -> false 
       
     } catch {
-      case _ => { println("item only in store"); builder += "StoreOnly" -> true }
+      case _ => { ScraperApp.printer.writeLine("item only in store", name); builder += "StoreOnly" -> true }
     }
   
     /**
@@ -99,7 +100,7 @@ class MyChemistHandler extends PageHandler_2 {
       price_builder += "isOnSale" -> true
       price_builder += "ori_price" -> price_ori
     } catch {
-      case _ => { println("not on sale"); price_builder += "isOnSale" -> true }
+      case _ => { ScraperApp.printer.writeLine("not on sale", name); price_builder += "isOnSale" -> true }
     }
     
     /**
@@ -115,6 +116,6 @@ class MyChemistHandler extends PageHandler_2 {
      */
     ScraperCache ++ builder.result
    
-    println("paser item end ...")
+    ScraperApp.printer.writeLine("paser item end ...", name)
   }
 }

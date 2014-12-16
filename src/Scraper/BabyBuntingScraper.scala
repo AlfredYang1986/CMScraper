@@ -7,11 +7,6 @@ import org.jsoup.nodes.Element
 import DAO.ScraperCache
 
 class BabyBuntingScraper(p : String, h : String) extends CategoryCrawl {
-  def apply(handler :PageHandler_2) = {
-    ScraperApp.printer.writeLine("Baby Bunting Scraper Prase Start ...")
-    enumItems(enumPagesInCategory(getCategoryFromNav), handler)
-    ScraperApp.printer.writeLine("Baby Bunting Scraper Prase End...")
-  }
 
   def url = p
   def name = "Baby Bunting"
@@ -40,7 +35,7 @@ class BabyBuntingScraper(p : String, h : String) extends CategoryCrawl {
     for (index <- 0 to totalItemInCat / pgeSize) {
         val next = urlForNextPage(html, page, index + 1)
       if (next != null) reVal = reVal ::: enumItemInCategory(next)
-      ScraperApp.printer.writeLine("now processing " + reVal.size + " of " + totalItemInCat + " items")
+      ScraperApp.printer.writeLine("now processing " + reVal.size + " of " + totalItemInCat + " items", name)
     }
     reVal
   }

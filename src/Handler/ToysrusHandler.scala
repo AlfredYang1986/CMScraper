@@ -11,13 +11,14 @@ import Scraper.ItemNode
 import Application.BrandList
 import Application.JSoapConnectionManager
 import Handler.categoryMapping.ToysrusMapping
+import Application.ScraperApp
 
 class ToysrusHandler extends PageHandler_2 {
-//    def apply(url : String, host : String) = {
+	def name = "Toysrus"
     def apply(node : ItemNode, host : String) = {
         val url = node.url
-        println("paser item begin ...")
-        println(url)
+        ScraperApp.printer.writeLine("paser item begin ...", name)
+        ScraperApp.printer.writeLine(url)
         
         val html = JSoapConnectionManager(url)
 
@@ -27,7 +28,7 @@ class ToysrusHandler extends PageHandler_2 {
          * 2. get product name
          */
         val proName = html.select("div.prodTitle").text
-        println(proName)
+        ScraperApp.printer.writeLine(proName, name)
         builder += "name" -> proName
         
         /**
@@ -39,7 +40,7 @@ class ToysrusHandler extends PageHandler_2 {
 		if (bd.isEmpty) brand = "Unknown" 
 		else brand = bd.get.name
 		
-		println(brand)
+		ScraperApp.printer.writeLine(brand, name)
 		builder += "brand" -> brand
 
 		/**
@@ -67,9 +68,8 @@ class ToysrusHandler extends PageHandler_2 {
 			for (index <- 1 to tmp.size - 1)
 				candi = tmp.get(index).text :: candi
 		 
-			println(candi)
 			val reVal = getCatIter(candi, candi)
-			println("category : " + reVal)
+			ScraperApp.printer.writeLine("category : " + reVal, name)
 			reVal
 		}
 		val cat = getCategory
@@ -81,12 +81,12 @@ class ToysrusHandler extends PageHandler_2 {
         try {
           val imgContent = html.select("div.leftPane > div > table > tbody > tr > td > a").first
           val imgUrl = imgContent.attr("href")
-          println(imgUrl)   
+          ScraperApp.printer.writeLine(imgUrl, name)
           builder += "imgUrl" -> imgUrl
           builder += "StoreOnly" -> false 
       
         } catch {
-          case _ => { println("item only in store"); builder += "StoreOnly" -> true }
+          case _ => { ScraperApp.printer.writeLine("item only in store", name); builder += "StoreOnly" -> true }
         }
         
         /**
@@ -98,21 +98,21 @@ class ToysrusHandler extends PageHandler_2 {
            
         val price_cur = html.select("span.price").first.text
         price_builder += "current_price" -> price_cur 
-        println(price_cur)       
+        ScraperApp.printer.writeLine(price_cur, name)
         
         try {
           val price_ori = html.select("span.preSalePrice").first.text
           if (price_ori != "$0.00") {
               price_builder += "isOnSale" -> true
               price_builder += "ori_price" -> price_ori
-              println(price_ori)
+              ScraperApp.printer.writeLine(price_ori, name)
           
           } else {
-              println("not on sale")
+              ScraperApp.printer.writeLine("not on sale", name)
               price_builder += "isOnSale" -> false
           }
         } catch {
-            case _ => println("not on sale"); price_builder += "isOnSale" -> false
+            case _ => ScraperApp.printer.writeLine("not on sale", name); price_builder += "isOnSale" -> false
         }
         
         /**
@@ -128,6 +128,6 @@ class ToysrusHandler extends PageHandler_2 {
          */
         ScraperCache ++ builder.result
        
-        println("paser item end ...")
+        ScraperApp.printer.writeLine("paser item end ...", name)
     }
 }

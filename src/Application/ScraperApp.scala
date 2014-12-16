@@ -1,8 +1,8 @@
 package Application
 
 import DAO.ScraperCache
-
 import com.mongodb.casbah.Imports._
+import java.io.PrintWriter
 
 object ScraperApp extends App {
 	
@@ -10,12 +10,36 @@ object ScraperApp extends App {
 	 * Scraper system log
 	 */
 	object printer {
-		def writeLine(str : String) {
-			println(str)
+	
+		var pw : Map[String, PrintWriter] = Map.empty
+	  
+		def writeLine(str : String, path : String = "") = {
+			if (path == "") println(str)
+			else {
+				val p = pw.get(path)
+				if (p.isEmpty) {
+					val np = new PrintWriter(path)
+					pw += path -> np
+					np.write(str + "\n")
+				} else p.get.write(str + "\n")
+			}
 		}
 		
-		def write(str : String) {
-			print(str)
+		def write(str : String, path : String = "") {
+		  	if (path == "") println(str)
+			else {
+				val p = pw.get(path)
+				if (p.isEmpty) {
+					val np = new PrintWriter(path)
+					pw += path -> np
+					np.write(str)
+				} else p.get.write(str)
+			}
+		}
+		
+		def close(path : String) = {
+			val p = pw.get(path)
+			if (!p.isEmpty) p.get.close
 		}
 	}
 	
@@ -25,7 +49,7 @@ object ScraperApp extends App {
 	printer.writeLine("Scraper running ...")
 	BrandList("src/Config/BabyBrands.xml")
 	CateList("src/Config/babyCate.xml")
-	WebsiteProxyConfigRender("src/Config/Config.xml") map (_.apply)
+	WebsiteProxyConfigRender("src/Config/Config.xml") map { x => val t = new Thread(new ThreadsManager(x)); t.start; t.join }
 	ScraperCache.refresh()
 	BrandList.save
 	CateList.save

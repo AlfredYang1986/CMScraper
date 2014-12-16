@@ -4,8 +4,10 @@ import com.mongodb.casbah.Imports._
 import Application.CateList
 import Application.BrandList
 
+
 object ScraperCache {
 
+    var lock : AnyRef = new Object()      	
     private var cache : List[MongoDBObject] = Nil 
    
     def refresh(name : String = "products") =  {
@@ -40,19 +42,37 @@ object ScraperCache {
      * 2. union result if exist
      */
 	def union(o : MongoDBObject, n : MongoDBObject) : MongoDBObject = {
+		
+	  	def unionAcc(left : MongoDBList, right : MongoDBList) : MongoDBList = {
+	  	  
+	  		if (right.isEmpty) left
+	  		else if (left.isEmpty) right
+	  	
+	  		val lhs = left.head.asInstanceOf[MongoDBObject].get("source").get.asInstanceOf[String] 
+	  		val rhs = right.head.asInstanceOf[MongoDBObject].get("source").get.asInstanceOf[String]
+	  		
+	  		if (lhs >= rhs) unionAcc(left.tail.asInstanceOf[MongoDBList], right.tail.asInstanceOf[MongoDBList]) += right.head
+	  		else unionAcc(left.tail.asInstanceOf[MongoDBList], right.tail.asInstanceOf[MongoDBList]) += left.head
+	  	}
+	  
     	var po = (o.get("prices").get).asInstanceOf[MongoDBList]
-        var pn = (n.get("prices").get).asInstanceOf[MongoDBList]
+    				.sortBy(x => x.asInstanceOf[MongoDBObject].get("source").get.asInstanceOf[String])
+    				.asInstanceOf[MongoDBList]
+        
+	  	var pn = (n.get("prices").get).asInstanceOf[MongoDBList]
+    				.sortBy(x => x.asInstanceOf[MongoDBObject].get("source").get.asInstanceOf[String])
+    				.asInstanceOf[MongoDBList]
 //        po += pn.head
-            
-        o += "prices" -> (po union pn)
+    				
+        o += "prices" -> unionAcc(po, pn)
         o
 	}
    
     /**
      * manipulating price into mongolist
      */
-    def ++ (newObj : MongoDBObject) = {
-        
+    def ++ (newObj : MongoDBObject) = lock.synchronized  {
+       
         /**
          * 3. find result
          */

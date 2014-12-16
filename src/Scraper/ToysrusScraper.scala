@@ -9,11 +9,6 @@ import Application.JSoapConnectionManager
 import scala.collection.JavaConverters._
 
 class ToysrusScraper(p : String, h : String) extends CategoryCrawl {
-  def apply(handler :PageHandler_2) = {
-    ScraperApp.printer.writeLine("Toysrus Scraper Prase Start ...")
-    enumItems(enumPagesInCategory(getCategoryFromNav), handler)
-    ScraperApp.printer.writeLine("Toysrus Bunting Scraper Prase End...")
-  }
 
   def url = p
   def name = "Toysrus"
@@ -47,12 +42,12 @@ class ToysrusScraper(p : String, h : String) extends CategoryCrawl {
       val totalPages =  if (totalPageElement.size == 0) 1
       					else totalPageElement.first.text.trim.split(" ").last.toInt
 
-      println("there are %d pages in this category".format(totalPages))
+      ScraperApp.printer.writeLine("there are %d pages in this category".format(totalPages), name)
       
       for (index <- 1 to totalPages) {
           val next = urlForNextPage(html, page, index)
           if (next != null) reVal = reVal ::: enumItemInCategory(next)
-          println("now processing page %d".format(index))
+          ScraperApp.printer.writeLine("now processing page %d".format(index), name)
       }
       reVal
   }

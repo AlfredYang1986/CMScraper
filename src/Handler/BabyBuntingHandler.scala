@@ -10,14 +10,14 @@ import com.mongodb.casbah.Imports._
 import Application.BrandList
 import Scraper.ItemNode
 import Handler.categoryMapping.BabyBuningMapping
+import Application.ScraperApp
 
 class BabyBuntingHandler extends PageHandler_2 {
-//    def apply(url : String, host : String) = {
-    def apply(node : ItemNode, host : String) : Unit = {
+	def name = "Baby Bunting"
+	def apply(node : ItemNode, host : String) : Unit = {
         val url = node.url
         
-        println("paser item begin ...")
-        
+        ScraperApp.printer.writeLine("paser item begin ...", name)
         
         var html : Document = null
         
@@ -32,7 +32,7 @@ class BabyBuntingHandler extends PageHandler_2 {
          * 2. get product name
          */
         val proName = html.select("div.page-title > h1").first.text
-        println(proName)
+        ScraperApp.printer.writeLine(proName, name)
         builder += "name" -> proName
         
         /**
@@ -53,12 +53,12 @@ class BabyBuntingHandler extends PageHandler_2 {
         try {
           val imgContent = html.select("div.product-img-box > a > img").first
           val imgUrl = imgContent.attr("src")
-          println(imgUrl)   
+          ScraperApp.printer.writeLine(imgUrl, name)   
           builder += "imgUrl" -> imgUrl
           builder += "StoreOnly" -> false 
       
         } catch {
-          case _ => { println("item only in store"); builder += "StoreOnly" -> true }
+          case _ => { ScraperApp.printer.writeLine("item only in store", name); builder += "StoreOnly" -> true }
         }
         
         /**
@@ -72,18 +72,18 @@ class BabyBuntingHandler extends PageHandler_2 {
           val price_ori = html.select("p.old-price > span").first.text
           price_builder += "isOnSale" -> true
           price_builder += "ori_price" -> price_ori
-          println(price_ori)
+          ScraperApp.printer.writeLine(price_ori, name)
           
           val price_cur = html.select("p.special-price > span.price > amasty_seo").last.text
           price_builder += "current_price" -> price_cur 
-          println(price_cur)
+          ScraperApp.printer.writeLine(price_cur, name)
  
         } catch {
             case _ => { 
               val price_cur = html.select("span.regular-price > span > amasty_seo").last.text
               price_builder += "current_price" -> price_cur 
-              println(price_cur)
-              println("not on sale"); price_builder += "isOnSale" -> false
+              ScraperApp.printer.writeLine(price_cur, name)
+              ScraperApp.printer.writeLine("not on sale", name); price_builder += "isOnSale" -> false
             }
         }
         
@@ -100,6 +100,6 @@ class BabyBuntingHandler extends PageHandler_2 {
          */
         ScraperCache ++ builder.result
        
-        println("paser item end ...")
+        ScraperApp.printer.writeLine("paser item end ...", name)
     }
 }

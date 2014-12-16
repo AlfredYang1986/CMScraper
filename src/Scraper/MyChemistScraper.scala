@@ -7,12 +7,6 @@ import org.jsoup.nodes.Element
 import DAO.ScraperCache
 
 class MyChemistScraper(p : String, h : String) extends CategoryCrawl {
-  def apply(handler :PageHandler_2) = {
-    ScraperApp.printer.writeLine("My Chemist Scraper Prase Start ...")
-    enumItems(enumPagesInCategory(getCategoryFromNav), handler)
-//    ScraperCache.refresh()
-    ScraperApp.printer.writeLine("My Chemist Scraper Prase End...")
-  }
 
   def url = p
   def name = "My Chemist"
@@ -38,7 +32,7 @@ class MyChemistScraper(p : String, h : String) extends CategoryCrawl {
     for (index <- 0 to totalItemInCat / pgeSize) {
         val next = urlForNextPage(html, page, index + 1)
       if (next != null) reVal = reVal ::: enumItemInCategory(next)
-      ScraperApp.printer.writeLine("now processing " + reVal.size + " of " + totalItemInCat + " items")
+      ScraperApp.printer.writeLine("now processing " + reVal.size + " of " + totalItemInCat + " items", name)
     }
     reVal
   }

@@ -9,12 +9,13 @@ import DAO.ScraperCache
 import com.mongodb.casbah.Imports._
 import Scraper.ItemNode
 import Handler.categoryMapping.PriceLineMapping
+import Application.ScraperApp
 
 class PriceLineHandler extends PageHandler_2 {
-//    def apply(url : String, host : String) = {
+	def name = "Price Line Mother and Baby"
     def apply(node : ItemNode, host : String) = {
         val url = node.url
-        println("paser item begin ...")
+        ScraperApp.printer.writeLine("paser item begin ...", name)
        
         val html = Jsoup.connect(url).timeout(0).get
     
@@ -24,14 +25,14 @@ class PriceLineHandler extends PageHandler_2 {
          */
         val tmp = html.select("div.product-brand-logo > img")
         val brand = tmp.attr("title")
-        println(brand)
+        ScraperApp.printer.writeLine(brand, name)
         builder += "brand" -> brand
         
         /**
          * 2. get name
          */
         val proName = html.select("div.product-name-size").text
-        println(proName)
+        ScraperApp.printer.writeLine(proName, name)
         builder += "name" -> proName
        
         /**
@@ -39,7 +40,7 @@ class PriceLineHandler extends PageHandler_2 {
          */
         val catArr = html.select("div.b2c_breadcump > a")
         val catName = catArr.get(catArr.size - 2).text
-        println(catName)
+        ScraperApp.printer.writeLine(catName, name)
         builder += "cat" -> PriceLineMapping(catName, proName)
         
         /**
@@ -48,12 +49,12 @@ class PriceLineHandler extends PageHandler_2 {
         try {
             val imgContent = html.select("div.product-image-container > a > img").first
             val imgUrl = imgContent.attr("src")
-            println(imgUrl)   
+            ScraperApp.printer.writeLine(imgUrl, name)   
             builder += "imgUrl" -> imgUrl
             builder += "StoreOnly" -> false 
       
         } catch {
-          case _ => { println("item only in store"); builder += "StoreOnly" -> true }
+          case _ => { ScraperApp.printer.writeLine("item only in store", name); builder += "StoreOnly" -> true }
         }
 
         /**
@@ -70,7 +71,7 @@ class PriceLineHandler extends PageHandler_2 {
             price_builder += "isOnSale" -> true
             price_builder += "ori_price" -> price_ori
         } catch {
-          case _ => { println("not on sale"); price_builder += "isOnSale" -> false }
+          case _ => { ScraperApp.printer.writeLine("not on sale", name); price_builder += "isOnSale" -> false }
         }
        
         /**
@@ -84,9 +85,8 @@ class PriceLineHandler extends PageHandler_2 {
         /**
          * 6. save to database
          */
-        println(builder.result)
         ScraperCache ++ builder.result
         
-        println("paser item end ...")
+        ScraperApp.printer.writeLine("paser item end ...", name)
     }
 }

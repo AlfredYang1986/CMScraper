@@ -9,12 +9,13 @@ import DAO.ScraperCache
 import com.mongodb.casbah.Imports._
 import Application.BrandList
 import Scraper.ItemNode
+import Application.ScraperApp
 
 class PharmacyDircetHandler extends PageHandler_2 {
-//    def apply(url : String, host : String) = {
+	def name = "Pharmacy Direct Mother and Baby"
     def apply(node : ItemNode, host : String) = {
         val url = node.url
-        println("paser item begin ...")
+        ScraperApp.printer.writeLine("paser item begin ...", name)
        
         val html = Jsoup.connect(url).timeout(0).get
     
@@ -23,7 +24,7 @@ class PharmacyDircetHandler extends PageHandler_2 {
          * 2. get name
          */
         val proName = html.select("div.product-details-layout-2-right > div > h2").text
-        println(proName)
+        ScraperApp.printer.writeLine(proName, name)
         builder += "name" -> proName
         
         /**
@@ -44,12 +45,12 @@ class PharmacyDircetHandler extends PageHandler_2 {
         try {
             val imgContent = html.select("span.image-wrapper > a > img").first
             val imgUrl = imgContent.attr("src")
-            println(imgUrl)   
+            ScraperApp.printer.writeLine(imgUrl, name)   
             builder += "imgUrl" -> imgUrl
             builder += "StoreOnly" -> false 
       
         } catch {
-          case _ => { println("item only in store"); builder += "StoreOnly" -> true }
+          case _ => { ScraperApp.printer.writeLine("item only in store", name); builder += "StoreOnly" -> true }
         }
 
         /**
@@ -65,7 +66,7 @@ class PharmacyDircetHandler extends PageHandler_2 {
             price_builder += "isOnSale" -> true
             price_builder += "ori_price" -> price_ori
         } catch {
-          case _ => { println("not on sale"); price_builder += "isOnSale" -> false }
+          case _ => { ScraperApp.printer.writeLine("not on sale", name); price_builder += "isOnSale" -> false }
         }
        
         /**
@@ -81,6 +82,6 @@ class PharmacyDircetHandler extends PageHandler_2 {
          */
         ScraperCache ++ builder.result
         
-        println("paser item end ...")
+        ScraperApp.printer.writeLine("paser item end ...", name)
     }
 }

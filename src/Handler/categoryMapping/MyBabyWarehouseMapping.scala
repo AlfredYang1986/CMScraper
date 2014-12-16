@@ -2,7 +2,7 @@ package Handler.categoryMapping
 
 object MyBabyWarehouseMapping {
 	def apply(can : String, name : String) : String = can match {
-	  
+
 	  /**
 	   * at home
 	   */
@@ -12,7 +12,7 @@ object MyBabyWarehouseMapping {
 	  case "PLAYPENS" => "Cots"
 	  case "SWINGS" => "Swings"
 	  case "WALKERS" => "Walkers"
-	    
+	  	 
 	  /**
 	   * Bath & Changing
 	   */
@@ -34,7 +34,7 @@ object MyBabyWarehouseMapping {
 	  case "SKIN CARE & TOILETRIES" => "Baby Cream"
 
 	  case "STEP STOOLS" => "Intelligence Development"
-	  
+	   
 	  /**
 	   * Bedding
 	   */
@@ -46,7 +46,7 @@ object MyBabyWarehouseMapping {
 	  case "SNUGGLE BEDS" => "Beds"
 	  case "SWADDLES & WRAPS" => "Sleepingsuits"
 	  case "MOBILES" => "Indoors"
-	   
+	    
 	  /**
 	   * Car safety
 	   */
@@ -60,7 +60,7 @@ object MyBabyWarehouseMapping {
 	  case "BOOSTER SEATS (4 TO 8 YEARS)" => "Car Seats"
 	  case "Car Accessories" => "Car Accessories"
 	  case "WINDOW SOX & SHADES" => "Car Accessories"
-	 
+	    
 	  /**
 	   * Feeding Time
 	   */
@@ -75,7 +75,7 @@ object MyBabyWarehouseMapping {
 	  case "NURSING PILLOWS" => "Pillows"
 	  case "PACKS & GIFT SETS" => "Bottles & Teats"
 	  case "TRAINING & TODDLER CUPS/BOTTLES" => "Bottles & Teats"
-	 
+	    
 	  /**
 	   * On the Go
 	   */
@@ -88,7 +88,7 @@ object MyBabyWarehouseMapping {
 	  case "PORTACOTS" => "Cots"
 	  case "TROLLEY ACCESSORIES" => "Toilet"
 	  case "PROTECTION FOR BABY" => "First Aid"
-	   
+	    
 	  /**
 	   * Nursery
 	   */
@@ -102,18 +102,17 @@ object MyBabyWarehouseMapping {
 	  case "MATTRESSES" => "Sheets"
 	  case "TIDY DRAWERS & TOY BOXES" => "Furniture"
 	  case "GLIDERS & OTTOMANS" => "Furniture"
-	  case "NURSERY ACCESSORIES" => "First Aid"
-	    
+	  case "NURSERY ACCESSORIES" => "First Aid"	    
+
 	  /**
 	   * playtime
 	   */
 	  case "CDS, DVDS & BOOKS" => "Books & CD's"
 	  case "JUMPERS" => "Swings"
 	  case "PLAY GYMS & FLOOR MATS" => "Indoors"
-	  case "PUSH & RIDE ON’S" => "Walkers"
 	  case "TOYS" => "Indoors"
 	  case "GIFTWARE" => "Indoors"
-	 
+	    
 	  /**
 	   * Prams
 	   */
@@ -133,8 +132,8 @@ object MyBabyWarehouseMapping {
 	  case "KITCHEN SAFETY" => "Baby Accessories"
 	  case "LATCHES & LOCKS" => "Baby Accessories"
 	  case "MONITORS" => "Baby Accessories"
-	  case "THERMOMETERS" => "Thermometers"
-	  
-	  case _ => ""
+	  case "THERMOMETERS" => "Thermometers"	    
+
+	  case _ => "Unknows"
 	}
 }
