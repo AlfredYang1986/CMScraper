@@ -14,9 +14,11 @@ import Application.JSoapConnectionManager
 trait CategoryCrawl extends Crawl_2 {
   
 	def apply(handler :PageHandler_2) = {
-		ScraperApp.printer.writeLine("Baby Bunting Scraper Prase Start ...", name)
+		ScraperApp.printer.writeLine(name + " Scraper Prase Start ...", name)
+		println(name + " Scraper Prase Start ...", name)
 		enumItems(enumPagesInCategory(getCategoryFromNav), handler)
-		ScraperApp.printer.writeLine("Baby Bunting Scraper Prase End...", name)
+		ScraperApp.printer.writeLine(name + " Scraper Prase End...", name)
+		println(name + " Scraper Prase End...", name)
 		ScraperApp.printer.close(name)
 	}
   

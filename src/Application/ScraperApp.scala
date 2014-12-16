@@ -50,7 +50,9 @@ object ScraperApp extends App {
 	printer.writeLine("Scraper running ...")
 	BrandList("src/Config/BabyBrands.xml")
 	CateList("src/Config/babyCate.xml")
+	
 	WebsiteProxyConfigRender("src/Config/Config.xml") map { x => val t = new Thread(new ThreadsManager(x)); t.start; t.join }
+	
 	ScraperCache.refresh()
 	BrandList.save
 	CateList.save
