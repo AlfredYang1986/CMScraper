@@ -18,7 +18,7 @@ class ToysrusHandler extends PageHandler_2 {
     def apply(node : ItemNode, host : String) = {
         val url = node.url
         ScraperApp.printer.writeLine("paser item begin ...", name)
-        ScraperApp.printer.writeLine(url)
+        ScraperApp.printer.writeLine(url, name)
         
         val html = JSoapConnectionManager(url)
 

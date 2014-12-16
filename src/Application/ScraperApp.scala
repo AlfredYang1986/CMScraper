@@ -3,6 +3,7 @@ package Application
 import DAO.ScraperCache
 import com.mongodb.casbah.Imports._
 import java.io.PrintWriter
+import java.io.FileWriter
 
 object ScraperApp extends App {
 	
@@ -18,7 +19,7 @@ object ScraperApp extends App {
 			else {
 				val p = pw.get(path)
 				if (p.isEmpty) {
-					val np = new PrintWriter(path)
+					val np = new PrintWriter(new FileWriter(path, true))
 					pw += path -> np
 					np.write(str + "\n")
 				} else p.get.write(str + "\n")
@@ -30,7 +31,7 @@ object ScraperApp extends App {
 			else {
 				val p = pw.get(path)
 				if (p.isEmpty) {
-					val np = new PrintWriter(path)
+					val np = new PrintWriter(new FileWriter(path, true))
 					pw += path -> np
 					np.write(str)
 				} else p.get.write(str)

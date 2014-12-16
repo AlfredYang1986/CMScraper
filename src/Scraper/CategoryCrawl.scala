@@ -60,13 +60,15 @@ trait CategoryCrawl extends Crawl_2 {
 			
 	def enumPagesInCategory(categories : List[String]) : List[ItemNode] = {
 		def enumPages(page : String) : List[ItemNode] = {
-			val html = JSoapConnectionManager(url)
+			val html = JSoapConnectionManager(page)
 			val cat = categoryPageInfo(html)
 			ScraperApp.printer.writeLine(cat, name)
 			enumLoop(html, page, enumLoopPrintFunc) map (new ItemNode(_, cat))
 		}
 		
 		ScraperApp.printer.writeLine("there are " + categories.size + " categories", name)
+		println("there are " + categories.size + " categories")
+		println(categories)
 		var reVal : List[ItemNode] = Nil
 		categories map { iter => 
 			reVal = reVal ::: enumPages(iter)
