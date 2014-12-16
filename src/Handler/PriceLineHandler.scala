@@ -8,6 +8,7 @@ import org.jsoup.select.Elements
 import DAO.ScraperCache
 import com.mongodb.casbah.Imports._
 import Scraper.ItemNode
+import Handler.categoryMapping.PriceLineMapping
 
 class PriceLineHandler extends PageHandler_2 {
 //    def apply(url : String, host : String) = {
@@ -36,9 +37,10 @@ class PriceLineHandler extends PageHandler_2 {
         /**
          * 1.1 get category
          */
-        val catName = html.select("div.b2c_breadcump > a").last.text
+        val catArr = html.select("div.b2c_breadcump > a")
+        val catName = catArr.get(catArr.size - 2).text
         println(catName)
-        builder += "cat" -> catName
+        builder += "cat" -> PriceLineMapping(catName, proName)
         
         /**
          * 3. get image url
@@ -59,6 +61,7 @@ class PriceLineHandler extends PageHandler_2 {
          */
         val price_builder = MongoDBObject.newBuilder
         price_builder += "source" -> "Price Line"
+        price_builder += "oriCat" -> catName
         val price_cur = html.select("div.basket-right-price").text
         price_builder += "current_price" -> price_cur 
 

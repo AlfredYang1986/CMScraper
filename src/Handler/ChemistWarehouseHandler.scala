@@ -69,7 +69,8 @@ class ChemistWarehouseHandler extends PageHandler_2 {
 			println(reVal)
 			reVal
 		}
-		builder += "cat" -> ChemitWarehouseAndMyChemitMapping(getCategory, proName)
+		val cat = getCategory
+		builder += "cat" -> ChemitWarehouseAndMyChemitMapping(cat, proName)
 
 		/**
 		 * 3. get image url
@@ -90,6 +91,7 @@ class ChemistWarehouseHandler extends PageHandler_2 {
 		 */
 		val price_builder = MongoDBObject.newBuilder
 		price_builder += "source" -> "Chemist Warehouse"
+		price_builder += "oriCat" -> cat
 		val price_cur = html.select("div.ProductPage_NormalPrice").text
 		price_builder += "current_price" -> price_cur 
 

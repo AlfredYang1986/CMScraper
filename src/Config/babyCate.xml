@@ -2,15 +2,19 @@
 <baby>
 	<cats>
 		<cat value="Baby Bathing">
-			<subcat>Bady Powder</subcat>
+			<subcat>Baby Powder</subcat>
 			<subcat>Baby Shampoo &amp; Body Wash</subcat>
 			<subcat>Bath Accessories</subcat>
 			<subcat>Lotions</subcat>
 			<subcat>Oil</subcat>
 			<subcat>Baby Cream</subcat>
+			<subcat>Face Washers</subcat>
 		</cat>
 		<cat value="Baby Changing">
 			<subcat>Baby Wipes</subcat>
+			<subcat>Baby Nappy</subcat>
+			<subcat>Change Tables</subcat>
+			<subcat>Toilet</subcat>
 			<subcat>Changing Accessories</subcat>
 		</cat>
 		<cat value="Baby Feeding">
@@ -23,6 +27,7 @@
 		</cat>
 		<cat value="Baby Health &amp; Safety">
 			<subcat>Medicine &amp; Vitamins</subcat>
+			<subcat>First Aid</subcat>
 			<subcat>Thermometers</subcat>
 		</cat>
 		<cat value="Baby Accessories">
@@ -47,7 +52,6 @@
 			<subcat>Cots</subcat>
 			<subcat>Beds</subcat>
 			<subcat>Furniture</subcat>
-			<subcat>Change Tables</subcat>
 			<subcat>High Chairs</subcat>
 			<subcat>Furniture Accessories</subcat>
 		</cat>
@@ -60,11 +64,13 @@
 			<subcat>Babywear</subcat>
 			<subcat>Underwear</subcat>
 			<subcat>Outerwear</subcat>
+			<subcat>Clothing Accessories</subcat>
 		</cat>
 		<cat value="Toys">
 			<subcat>Swings</subcat>
-			<subcat>Outdoor Toys</subcat>
-			<subcat>Indoor Toys</subcat>
+			<subcat>Outdoors</subcat>
+			<subcat>Indoors</subcat>
+			<subcat>Intelligence Development</subcat>
 			<subcat>Books &amp; CD's</subcat>
 			<subcat>Walkers</subcat>
 		</cat>

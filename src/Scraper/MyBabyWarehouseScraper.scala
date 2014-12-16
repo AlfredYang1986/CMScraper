@@ -17,7 +17,7 @@ class MyBabyWarehouseScraper(p : String, h : String) extends CategoryCrawl {
   def name = "My Baby Warehouse"
   override def host = h
     
-  def categoryQueryString = "div#header-nav > nav > ol > li > a"
+  def categoryQueryString = "div#header-nav > nav > ol > li > ul > li > a"
   def itemQueryString = "ul.products-grid > li > a"
   def itmesPerPage(html : Document) : Int = 0
 
@@ -42,4 +42,7 @@ class MyBabyWarehouseScraper(p : String, h : String) extends CategoryCrawl {
 //    }
     reVal
   }
+  
+  override def categoryPageInfo(html : Document) = html.select("#site-container > div > div > div > ul > li")
+		  											.last.children().select("strong").text
 }

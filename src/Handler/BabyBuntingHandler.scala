@@ -45,8 +45,7 @@ class BabyBuntingHandler extends PageHandler_2 {
         /**
          * 1.1 get cat
          */
-//		builder += "cat" -> BabyBuningMapping(node.other.asInstanceOf[String], "")
-		builder += "cat" -> node.other.asInstanceOf[String]
+		builder += "cat" -> BabyBuningMapping(node.other.asInstanceOf[String], "")
         
         /**
          * 3. get image url
@@ -67,6 +66,7 @@ class BabyBuntingHandler extends PageHandler_2 {
          */
         val price_builder = MongoDBObject.newBuilder
         price_builder += "source" -> "Baby Bunting"
+        price_builder += "oriCat" -> node.other.asInstanceOf[String]
         
         try {
           val price_ori = html.select("p.old-price > span").first.text

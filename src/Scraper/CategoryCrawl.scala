@@ -22,9 +22,9 @@ trait CategoryCrawl extends Crawl_2 {
 	def getCategoryFromNav : List[String] = 
 //      Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get.select(categoryQueryString)
       	JSoapConnectionManager(url).select(categoryQueryString)
-			    .asScala.toList.distinct filter cateUrlFilter map cateUrlFromNode
+//			    .asScala.toList.distinct filter cateUrlFilter map cateUrlFromNode
 //			    .asScala.toList.distinct map cateUrlFromNode
-//          	.asScala.toList.head :: Nil map cateUrlFromNode // only first for
+          	.asScala.toList.head :: Nil map cateUrlFromNode // only first for
 		
 	/**
 	 * 2. get current page items
@@ -50,13 +50,14 @@ trait CategoryCrawl extends Crawl_2 {
 //			.asScala.toList.head :: Nil map itemUrlFromPage  // only first for test
 //			.asScala.toList.distinct.take(20) map itemUrlFromPage  // only top 100 for test
 	
-	def categoryPageInfo(html : Document) = ""
+	def categoryPageInfo(html : Document) : String = ""
 			
 //	def enumPagesInCategory(categories : List[String]) : List[String] = {
 	def enumPagesInCategory(categories : List[String]) : List[ItemNode] = {
 //		def enumPages(page : String) : List[String] = {
 		def enumPages(page : String) : List[ItemNode] = {
-			val html = Jsoup.connect(page).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get
+//			val html = Jsoup.connect(page).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get
+			val html = JSoapConnectionManager(url)
 			val cat = categoryPageInfo(html)
 			println(cat)
 			enumLoop(html, page, enumLoopPrintFunc) map (new ItemNode(_, cat))

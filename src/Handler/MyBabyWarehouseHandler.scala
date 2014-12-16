@@ -8,15 +8,19 @@ import org.jsoup.select.Elements
 import DAO.ScraperCache
 import com.mongodb.casbah.Imports._
 import Scraper.ItemNode
+import Application.JSoapConnectionManager
+import Handler.categoryMapping.MyBabyWarehouseMapping
 
 class MyBabyWarehouseHandler extends PageHandler_2 {
 //    def apply(url : String, host : String) = {
     def apply(node : ItemNode, host : String) = {
         val url = node.url
+        val can_cat = node.other.asInstanceOf[String]
         println("paser item begin ...")
         println(url)
+        println(can_cat)
 
-        val html = Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get
+        val html = JSoapConnectionManager(url) 
     
         val builder = MongoDBObject.newBuilder
         /**
@@ -25,20 +29,20 @@ class MyBabyWarehouseHandler extends PageHandler_2 {
         val tmpBrand = html.select("#product-attribute-specs-table > tbody > tr").get(1).children().select("td").last.text
         println(tmpBrand)
         builder += "brand" -> html.select("#product-attribute-specs-table > tbody > tr").get(1).children().select("td").last.text
+         
+        /**
+         * 2. get product name
+         */
+        val proName = html.select("div.product-name > span").first.text
+        println(proName)
+        builder += "name" -> proName       
         
         /**
          * 1.1 get categories
          */
         val tmpCategory = html.select("#site-container > div > div > div > ul > li > a").last.text
         println(tmpCategory)
-        builder += "cat" -> html.select("#site-container > div > div > div > ul > li > a").last.text
-        
-        /**
-         * 2. get product name
-         */
-        val proName = html.select("div.product-name > span").first.text
-        println(proName)
-        builder += "name" -> proName
+        builder += "cat" -> MyBabyWarehouseMapping(tmpCategory, proName)
         
         /**
          * 3. get image url
@@ -59,6 +63,7 @@ class MyBabyWarehouseHandler extends PageHandler_2 {
          */
         val price_builder = MongoDBObject.newBuilder
         price_builder += "source" -> "My Baby Warehouse"
+        price_builder += "oriCat" -> tmpCategory
         
         try {
           val price_ori = html.select("p.old-price > span.price").text

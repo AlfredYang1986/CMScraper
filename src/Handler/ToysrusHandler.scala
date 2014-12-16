@@ -10,6 +10,7 @@ import com.mongodb.casbah.Imports._
 import Scraper.ItemNode
 import Application.BrandList
 import Application.JSoapConnectionManager
+import Handler.categoryMapping.ToysrusMapping
 
 class ToysrusHandler extends PageHandler_2 {
 //    def apply(url : String, host : String) = {
@@ -71,7 +72,8 @@ class ToysrusHandler extends PageHandler_2 {
 			println("category : " + reVal)
 			reVal
 		}
-		builder += "cat" -> getCategory
+		val cat = getCategory
+		builder += "cat" -> ToysrusMapping(cat, proName)
 		
         /**
          * 3. get image url
@@ -92,6 +94,7 @@ class ToysrusHandler extends PageHandler_2 {
          */
         val price_builder = MongoDBObject.newBuilder
         price_builder += "source" -> "toysrus"
+        price_builder += "oriCat" -> cat
            
         val price_cur = html.select("span.price").first.text
         price_builder += "current_price" -> price_cur 
