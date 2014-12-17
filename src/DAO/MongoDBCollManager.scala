@@ -48,4 +48,6 @@ object MongoDBCollManager {
       	}
     
     def insert(name : String)(obj : MongoDBObject) = this.getCollectionSafe(name) += obj
+    
+    def enumCollections : List[String] = this.getBabyDatabase().collectionNames.toList
 }

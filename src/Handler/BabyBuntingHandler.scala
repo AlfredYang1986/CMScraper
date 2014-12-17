@@ -11,6 +11,7 @@ import Application.BrandList
 import Scraper.ItemNode
 import Handler.categoryMapping.BabyBuningMapping
 import Application.ScraperApp
+import Application.JSoapConnectionManager
 
 class BabyBuntingHandler extends PageHandler_2 {
 	def name = "Baby Bunting"
@@ -19,13 +20,8 @@ class BabyBuntingHandler extends PageHandler_2 {
         
         ScraperApp.printer.writeLine("paser item begin ...", name)
         
-        var html : Document = null
-        
-        try {
-          html = Jsoup.connect(url).timeout(0).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get
-        } catch {
-          case _ => return Unit
-        }
+        val html : Document = JSoapConnectionManager(url)
+        if (html == null) return
     
         val builder = MongoDBObject.newBuilder
         /**

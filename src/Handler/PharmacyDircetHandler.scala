@@ -10,14 +10,16 @@ import com.mongodb.casbah.Imports._
 import Application.BrandList
 import Scraper.ItemNode
 import Application.ScraperApp
+import Application.JSoapConnectionManager
 
 class PharmacyDircetHandler extends PageHandler_2 {
 	def name = "Pharmacy Direct Mother and Baby"
-    def apply(node : ItemNode, host : String) = {
+    def apply(node : ItemNode, host : String) : Unit = {
         val url = node.url
         ScraperApp.printer.writeLine("paser item begin ...", name)
-       
-        val html = Jsoup.connect(url).timeout(0).get
+      
+        val html = JSoapConnectionManager(url)
+        if (html == null) return 
     
         val builder = MongoDBObject.newBuilder
         /**
@@ -37,6 +39,9 @@ class PharmacyDircetHandler extends PageHandler_2 {
         /**
 		 * 1.1 get what it for category
 		 */
+        val tmp = node.other.asInstanceOf[String]
+        ScraperApp.printer.writeLine(tmp, name)
+        builder += "cat" -> tmp
         
         
         /**

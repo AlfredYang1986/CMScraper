@@ -14,14 +14,15 @@ import Application.ScraperApp
 
 class MyBabyWarehouseHandler extends PageHandler_2 {
 	def name = "My Baby Warehouse"
-    def apply(node : ItemNode, host : String) = {
+    def apply(node : ItemNode, host : String) : Unit = {
         val url = node.url
         val can_cat = node.other.asInstanceOf[String]
         ScraperApp.printer.writeLine("paser item begin ...", name)
         ScraperApp.printer.writeLine(url, name)
         ScraperApp.printer.writeLine(can_cat, name)
 
-        val html = JSoapConnectionManager(url) 
+        val html = JSoapConnectionManager(url)
+        if (html == null) return
     
         val builder = MongoDBObject.newBuilder
         /**

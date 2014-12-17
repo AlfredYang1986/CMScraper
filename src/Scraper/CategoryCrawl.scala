@@ -15,10 +15,8 @@ trait CategoryCrawl extends Crawl_2 {
   
 	def apply(handler :PageHandler_2) = {
 		ScraperApp.printer.writeLine(name + " Scraper Prase Start ...", name)
-		println(name + " Scraper Prase Start ...", name)
 		enumItems(enumPagesInCategory(getCategoryFromNav), handler)
 		ScraperApp.printer.writeLine(name + " Scraper Prase End...", name)
-		println(name + " Scraper Prase End...", name)
 		ScraperApp.printer.close(name)
 	}
   
@@ -54,8 +52,8 @@ trait CategoryCrawl extends Crawl_2 {
 
 	def enumItemInCategory(cate : String) : List[String] =
     	JSoapConnectionManager(cate).select(itemQueryString)
-			.asScala.toList.distinct map itemUrlFromPage
-//			.asScala.toList.head :: Nil map itemUrlFromPage  // only first for test
+//			.asScala.toList.distinct map itemUrlFromPage
+			.asScala.toList.head :: Nil map itemUrlFromPage  // only first for test
 //			.asScala.toList.distinct.take(20) map itemUrlFromPage  // only top 100 for test
 	
 	def categoryPageInfo(html : Document) : String = ""
@@ -64,13 +62,10 @@ trait CategoryCrawl extends Crawl_2 {
 		def enumPages(page : String) : List[ItemNode] = {
 			val html = JSoapConnectionManager(page)
 			val cat = categoryPageInfo(html)
-			ScraperApp.printer.writeLine(cat, name)
 			enumLoop(html, page, enumLoopPrintFunc) map (new ItemNode(_, cat))
 		}
 		
 		ScraperApp.printer.writeLine("there are " + categories.size + " categories", name)
-		println("there are " + categories.size + " categories")
-		println(categories)
 		var reVal : List[ItemNode] = Nil
 		categories map { iter => 
 			reVal = reVal ::: enumPages(iter)

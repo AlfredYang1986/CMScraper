@@ -35,4 +35,6 @@ class PharmacyDirectScraper(p : String, h : String) extends CategoryCrawl {
     }
     reVal
   }
+
+  override def categoryPageInfo(html : Document) = html.select("#sli_bct > div > div > b").last.text
 }

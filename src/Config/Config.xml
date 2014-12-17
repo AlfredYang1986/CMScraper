@@ -2,4 +2,7 @@
 <Scraper>
 	<website name="ChemistWarehouse" host="http://www.chemistwarehouse.com.au/" url="http://www.chemistwarehouse.com.au/categories.asp" handler="ChemistWarehouseHandler" crawl="ChemistWarehouseScraper">
 	</website>
+
+	<website name="MyChemist" host="http://www.mychemist.com.au/" url="http://www.mychemist.com.au/categories.asp" handler="MyChemistHandler" crawl="MyChemistScraper">
+	</website>
 </Scraper>

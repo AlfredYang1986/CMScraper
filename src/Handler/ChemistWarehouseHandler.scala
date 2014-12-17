@@ -12,13 +12,15 @@ import Application.BrandList.brandNode
 import Handler.categoryMapping.ChemitWarehouseAndMyChemitMapping
 import Scraper.ItemNode
 import Application.ScraperApp
+import Application.JSoapConnectionManager
 
 class ChemistWarehouseHandler extends PageHandler_2 {
 	def name = "Chemist Warehouse"
-    def apply(node : ItemNode, host : String) = {
+    def apply(node : ItemNode, host : String) : Unit = {
         val url = node.url
 		ScraperApp.printer.writeLine("paser item begin ...", name)
-		val html = Jsoup.connect(url).timeout(0).get
+		val html = JSoapConnectionManager(url)
+		if (html == null) return 
 		
 		val builder = MongoDBObject.newBuilder
 
@@ -36,7 +38,7 @@ class ChemistWarehouseHandler extends PageHandler_2 {
 		var brand : String = tmp.get(tmp.size - 2).text
 		if (BrandList.contains(brand)) builder += "brand" -> brand	
 		else {
-			val bd = BrandList.brands.find(x => proName.startsWith(x.name))
+			val bd = BrandList.brands.find(x => proName.toLowerCase.startsWith(x.name.toLowerCase))
 			if (bd.isEmpty) brand = "Unknown"
 			else brand = bd.get.name
 		} 

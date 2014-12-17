@@ -12,15 +12,17 @@ import Application.BrandList.brandNode
 import Handler.categoryMapping.ChemitWarehouseAndMyChemitMapping
 import Scraper.ItemNode
 import Application.ScraperApp
+import Application.JSoapConnectionManager
 
 class MyChemistHandler extends PageHandler_2 {
   def name = "My Chemist"
-  def apply(node : ItemNode, host : String) = {
+  def apply(node : ItemNode, host : String) : Unit = {
     val url = node.url
     
-    ScraperApp.printer.writeLine("paser item begin ...", name)
-    val html = Jsoup.connect(url).timeout(0).get
+    val html = JSoapConnectionManager(url)
+    if (html == null) return
     
+    ScraperApp.printer.writeLine("paser item begin ...", name)
     val builder = MongoDBObject.newBuilder
 
     /**
@@ -37,11 +39,12 @@ class MyChemistHandler extends PageHandler_2 {
 	var brand : String = tmp.get(tmp.size - 2).text
 	if (BrandList.contains(brand)) builder += "brand" -> brand	
 	else {
-		val bd = BrandList.brands.find(x => proName.startsWith(x.name))
+		val bd = BrandList.brands.find(x => proName.toLowerCase.startsWith(x.name.toLowerCase))
 		if (bd.isEmpty) brand = "Unknown"
 		else brand = bd.get.name
 	} 
 	ScraperApp.printer.writeLine(brand, name)
+	builder += "brand" -> brand
 	
 	/**
 	 * 1.1 get what it for category
@@ -100,7 +103,7 @@ class MyChemistHandler extends PageHandler_2 {
       price_builder += "isOnSale" -> true
       price_builder += "ori_price" -> price_ori
     } catch {
-      case _ => { ScraperApp.printer.writeLine("not on sale", name); price_builder += "isOnSale" -> true }
+      case _ => { ScraperApp.printer.writeLine("not on sale", name); price_builder += "isOnSale" -> false }
     }
     
     /**

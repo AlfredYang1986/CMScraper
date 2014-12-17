@@ -15,12 +15,13 @@ import Application.ScraperApp
 
 class ToysrusHandler extends PageHandler_2 {
 	def name = "Toysrus"
-    def apply(node : ItemNode, host : String) = {
+    def apply(node : ItemNode, host : String) : Unit = {
         val url = node.url
         ScraperApp.printer.writeLine("paser item begin ...", name)
         ScraperApp.printer.writeLine(url, name)
         
         val html = JSoapConnectionManager(url)
+        if (html == null) return 
 
         val builder = MongoDBObject.newBuilder
         

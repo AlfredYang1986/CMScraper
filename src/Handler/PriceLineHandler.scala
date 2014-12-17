@@ -10,14 +10,16 @@ import com.mongodb.casbah.Imports._
 import Scraper.ItemNode
 import Handler.categoryMapping.PriceLineMapping
 import Application.ScraperApp
+import Application.JSoapConnectionManager
 
 class PriceLineHandler extends PageHandler_2 {
 	def name = "Price Line Mother and Baby"
-    def apply(node : ItemNode, host : String) = {
+    def apply(node : ItemNode, host : String) : Unit = {
         val url = node.url
         ScraperApp.printer.writeLine("paser item begin ...", name)
-       
-        val html = Jsoup.connect(url).timeout(0).get
+      
+        val html = JSoapConnectionManager(url)
+        if (html == null) return 
     
         val builder = MongoDBObject.newBuilder
         /**
