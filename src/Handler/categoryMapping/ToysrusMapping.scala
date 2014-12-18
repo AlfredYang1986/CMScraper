@@ -16,5 +16,6 @@ object ToysrusMapping {
 	  case "Summer" => "Indoors"
 	  case "Bedroom" => "Indoors"
 	  case "Batteries" => "Indoors"
+	  case _ => can
 	}
 }

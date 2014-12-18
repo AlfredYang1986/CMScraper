@@ -24,6 +24,9 @@ class BabyBuntingHandler extends PageHandler_2 {
         if (html == null) return
     
         val builder = MongoDBObject.newBuilder
+        
+        try {
+               
         /**
          * 2. get product name
          */
@@ -95,6 +98,10 @@ class BabyBuntingHandler extends PageHandler_2 {
          * 6. save to database
          */
         ScraperCache ++ builder.result
+        
+        } catch {
+          case _ => return
+        }
        
         ScraperApp.printer.writeLine("paser item end ...", name)
     }

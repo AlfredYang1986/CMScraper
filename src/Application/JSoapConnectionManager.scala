@@ -14,7 +14,8 @@ object JSoapConnectionManager {
 				attmps = 0
 			} catch {
 				case e : java.net.SocketTimeoutException => ScraperApp.printer.writeLine("timeout reconnecting..."); attmps = attmps - 1
-				case _ => ScraperApp.printer.writeLine("some error with this url : \n\t" + url); attmps = 0
+				case ex : Exception => 
+				  ScraperApp.printer.writeLine("some error with this url : \n\t" + url + "\n\t" + ex.getMessage); attmps = 0
 			}
 		}
 		

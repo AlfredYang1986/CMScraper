@@ -25,8 +25,6 @@ object ScraperCache {
                 else {
                 	val ex = one.get
                 	val ne = unionWithDB(ex, xls.head)
-                	ne.get("prices")
-                	println(ne)
                 	coll.update(builder.result, ne)
                 }
                 

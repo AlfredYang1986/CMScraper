@@ -52,8 +52,8 @@ trait CategoryCrawl extends Crawl_2 {
 
 	def enumItemInCategory(cate : String) : List[String] =
     	JSoapConnectionManager(cate).select(itemQueryString)
-//			.asScala.toList.distinct map itemUrlFromPage
-			.asScala.toList.head :: Nil map itemUrlFromPage  // only first for test
+			.asScala.toList.distinct map itemUrlFromPage
+//			.asScala.toList.head :: Nil map itemUrlFromPage  // only first for test
 //			.asScala.toList.distinct.take(20) map itemUrlFromPage  // only top 100 for test
 	
 	def categoryPageInfo(html : Document) : String = ""
