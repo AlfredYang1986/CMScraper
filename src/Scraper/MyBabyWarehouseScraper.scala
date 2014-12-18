@@ -18,7 +18,14 @@ class MyBabyWarehouseScraper(p : String, h : String) extends CategoryCrawl {
 
   override def cateUrlFilter : Element => Boolean = !_.text.contains("Brands")
 
-  def totalItemsInCategory(html : Document) : Int = html.select("p.amount").first.text.trim.split(" ").last.toInt 
+  def totalItemsInCategory(html : Document) : Int = {
+      try {
+		  html.select("p.amount").first.text.trim.split(" ").last.toInt 
+        
+      } catch {
+        case _ => html.select("p.amount").first.text.trim.split(" ").head.toInt 
+      }
+  }
 
   def cateUrlFromNode : Element => String = _.attr("href")
   def itemUrlFromPage: Element => String = _.attr("href")
