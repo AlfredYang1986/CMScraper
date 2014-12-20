@@ -26,24 +26,48 @@ object BrandList {
 	 * save to db
 	 */
 	def save = {
-		if (MongoDBCollManager.isCollectionExist("brands")) 
-			MongoDBCollManager.removeCollection("brands")
-	
+//		if (MongoDBCollManager.isCollectionExist("brands")) 
+//			MongoDBCollManager.removeCollection("brands")
+
+		def union(cur : BasicDBList, cats : List[String]) : MongoDBList = {
+			val left = cur.sortBy(x => x.asInstanceOf[String])
+		
+			val result = MongoDBList.newBuilder
+			(left.union(cats).distinct) map ( x => result += x )
+			
+			result.result
+		}
+	  
 		brands map { iter => 
-		  	/**
-		  	 * brand name
-		  	 */
-			val builder = MongoDBObject.newBuilder
-			builder += "brandName" -> iter.name
+		  	
+		  	val coll = MongoDBCollManager.getCollectionSafe("brands")
+		  	val find_builder = MongoDBObject.newBuilder
+		  	find_builder += "brandName" -> iter.name
+		  	val fr = coll.findOne(find_builder.result)
+		  	
+		  	if (fr.isEmpty) {
+			  	/**
+			  	 * brand name
+			  	 */
+		  		val builder = MongoDBObject.newBuilder
+		  		builder += "brandName" -> iter.name
 			
-			/**
-			 * relate Categories
-			 */
-			val catsList = MongoDBList.newBuilder
-			iter.relateCats map (cat => catsList += cat)
-			builder += "relateCats" -> catsList.result
+		  		/**
+		  		 * relate Categories
+		  		 */
+		  		val catsList = MongoDBList.newBuilder
+		  		iter.relateCats map (cat => catsList += cat)
+		  		builder += "relateCats" -> catsList.result
 			
-			MongoDBCollManager.insert("brands")(builder.result)
+		  		MongoDBCollManager.insert("brands")(builder.result)
+		  		
+		  	} else {
+		  		val cur = fr.get
+		  		val rcs = cur.get("relateCats").asInstanceOf[BasicDBList]
+		  		cur += "relateCats" -> union(rcs, iter.relateCats)
+		  		
+		  		coll.update(find_builder.result, cur)
+		  	}
 		}  
 	}
 	

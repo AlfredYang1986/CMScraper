@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scraper>
-	<website name="MyBabyWarehouse" host="http://www.mybabywarehouse.com.au/" url="http://www.mybabywarehouse.com.au" handler="MyBabyWarehouseHandler" crawl="MyBabyWarehouseScraper">
+	<website name="ChemistWarehouse" host="http://www.chemistwarehouse.com.au/" url="http://www.chemistwarehouse.com.au/categories.asp" handler="ChemistWarehouseHandler" crawl="ChemistWarehouseScraper">
+	</website>
+	
+	<website name="MyChemist" host="http://www.mychemist.com.au/" url="http://www.mychemist.com.au/categories.asp" handler="MyChemistHandler" crawl="MyChemistScraper">
+	</website>
+	
+	<website name="PriceLine" host="https://www.priceline.com.au/" url="https://www.priceline.com.au/shop-by-brand?category=mother-and-baby" handler="PriceLineHandler" crawl="PriceLineScraper">
+	</website>
+
+	<website name="PriceLine" host="https://www.priceline.com.au/" url="https://www.priceline.com.au/shop-by-brand?page=2&amp;category=mother-and-baby" handler="PriceLineHandler" crawl="PriceLineScraper">
+	</website>
+
+	<website name="PriceLine" host="https://www.priceline.com.au/" url="https://www.priceline.com.au/shop-by-brand?page=3&amp;category=mother-and-baby" handler="PriceLineHandler" crawl="PriceLineScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/prams.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/car-seats-carriers.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/cots-changetables-furniture.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/clothing-swaddling-manchester.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/highchairs-feeding-bottles.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/gates-playpens-monitors-safety.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/toys-bouncers-swings-trikes.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="BabyBunting" host="http://www.babybunting.com.au/" url="http://www.babybunting.com.au/nappies-wipes-skincare.html" handler="BabyBuntingHandler" crawl="BabyBuntingScraper">
+	</website>
+
+	<website name="toysrus" host="http://www.toysrus.com.au/" url="http://www.toysrus.com.au" handler="ToysrusHandler" crawl="ToysrusScraper">
 	</website>
 </Scraper>

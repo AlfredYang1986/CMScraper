@@ -51,11 +51,37 @@ object CateList {
 				iter.children.foreach (saveNode(_))
 			}
 		}
-	  
-		if (MongoDBCollManager.isCollectionExist("cats")) 
-			MongoDBCollManager.removeCollection("cats")
+		
+		def union(cur : BasicDBList, brands : List[String]) : MongoDBList = {
+			val left = cur.sortBy(x => x.asInstanceOf[String])
+		
+			val result = MongoDBList.newBuilder
+			(left.union(brands).distinct) map ( x => result += x )
 			
-		cats map (iter => saveNode(iter))
+			result.result
+		}
+	  
+//		if (MongoDBCollManager.isCollectionExist("cats")) 
+//			MongoDBCollManager.removeCollection("cats")
+			
+		cats map { iter =>
+			
+			val coll = MongoDBCollManager.getCollectionSafe("cats")
+		  	val find_builder = MongoDBObject.newBuilder
+		  	find_builder += "catName" -> iter.name
+		  	find_builder += "isLeaf" -> true
+		  	val fr = coll.findOne(find_builder.result)
+		 
+		  	if (fr.isEmpty) {
+		  		saveNode(iter)
+		  	} else {
+		  		val cur = fr.get
+		  		val rcs = cur.get("relateBrands").asInstanceOf[BasicDBList]
+		  		cur += "relateBrands" -> union(rcs, iter.relateBrands)
+		  		
+		  		coll.update(find_builder.result, cur)
+		  	}
+		}
 	}
 	
 	def apply(path : String) = {
