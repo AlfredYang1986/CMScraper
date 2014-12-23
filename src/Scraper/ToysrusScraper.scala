@@ -51,4 +51,6 @@ class ToysrusScraper(p : String, h : String) extends CategoryCrawl {
       }
       reVal
   }
+  
+  override def categoryPageInfo(html : Document) : String = html.select("table.pfNavPath > tbody > tr > td > font > a").last.text
 }

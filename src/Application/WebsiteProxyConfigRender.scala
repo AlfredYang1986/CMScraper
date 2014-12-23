@@ -16,6 +16,8 @@ object WebsiteProxyConfigRender {
 			  case "BabyBuntingScraper" => new BabyBuntingScraper(url, host)
 			  case "ToysrusScraper" => new ToysrusScraper(url, host)
 			  case "MyBabyWarehouseScraper" => new MyBabyWarehouseScraper(url, host)
+			  case "BabyrusScraper" => new BabyrusScraper(url, host)
+			  case "BabyrusHomeScraper" => new BabyrusHomeScraper(url, host)
 			  case _ => null
 			}
 		}
@@ -29,6 +31,8 @@ object WebsiteProxyConfigRender {
 			  case "BabyBuntingHandler" => new BabyBuntingHandler
 			  case "ToysrusHandler" => new ToysrusHandler 
 			  case "MyBabyWarehouseHandler" => new MyBabyWarehouseHandler
+			  case "BabyrusHandler" => new BabyrusHandler
+			  case "BabyrusHomeHandler" => new BabyrusHomeHandler
 			  case _ => null
 			}
 		}

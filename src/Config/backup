@@ -47,4 +47,10 @@
 
 	<website name="MyBabyWarehouse" host="http://www.mybabywarehouse.com.au/" url="http://www.mybabywarehouse.com.au" handler="MyBabyWarehouseHandler" crawl="MyBabyWarehouseScraper">
 	</website>
+	
+	<website name="baby r us" host="http://www.toysrus.com.au/" url="http://www.toysrus.com.au/babies-r-us/i1177862" handler="BabyrusHandler" crawl="BabyrusScraper">
+	</website>
+
+	<website name="baby r us home" host="http://www.toysrus.com.au/" url="http://www.toysrus.com.au/babies-r-us-home/w1/i1177862" handler="BabyrusHomeHandler" crawl="BabyrusHomeScraper">
+	</website>
 </Scraper>

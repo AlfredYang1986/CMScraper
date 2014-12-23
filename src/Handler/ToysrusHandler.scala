@@ -14,7 +14,10 @@ import Handler.categoryMapping.ToysrusMapping
 import Application.ScraperApp
 
 class ToysrusHandler extends PageHandler_2 {
-	def name = "Toysrus"
+	def name = "toysrus"
+	 
+	def catMapping(cat1 : String, name :String, cat2 : String) : String = ToysrusMapping(cat1, name)
+	  
     def apply(node : ItemNode, host : String) : Unit = {
         val url = node.url
         ScraperApp.printer.writeLine("paser item begin ...", name)
@@ -74,7 +77,8 @@ class ToysrusHandler extends PageHandler_2 {
 			reVal
 		}
 		val cat = getCategory
-		builder += "cat" -> ToysrusMapping(cat, proName)
+		ScraperApp.printer.writeLine("category candi : " + node.other.asInstanceOf[String])
+		builder += "cat" -> catMapping(cat, proName, node.other.asInstanceOf[String])
 		
         /**
          * 3. get image url
@@ -94,7 +98,7 @@ class ToysrusHandler extends PageHandler_2 {
          * 4. get price
          */
         val price_builder = MongoDBObject.newBuilder
-        price_builder += "source" -> "toysrus"
+        price_builder += "source" -> name
         price_builder += "oriCat" -> cat
            
         val price_cur = html.select("span.price").first.text

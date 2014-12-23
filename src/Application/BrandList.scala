@@ -74,6 +74,7 @@ object BrandList {
 	def apply(path : String) = {
 		new XMlBrandExtention()(path)
 		new ToysRusUrlBrandExtention()("http://www.toysrus.com.au/brands/")
+		new ToysRusUrlBrandExtention()("http://www.toysrus.com.au/brands-bru/")
 		new MyBabyWarehouseUrlBrandExtention()("http://mybabywarehouse.com.au/baby-brands.html?___SID=U")
 	}
 }
